@@ -1,0 +1,16 @@
+{
+  "name": "appfit_browser_sdk",
+  "version": "0.0.1",
+  "description": "An SDK to track events via the AppFit API",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Uptech Studio",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
+  }
+}
