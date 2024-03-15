@@ -2,11 +2,17 @@
   "name": "appfit_browser_sdk",
   "version": "0.0.1",
   "description": "An SDK to track events via the AppFit API",
-  "main": "index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.js",
   "scripts": {
+    "build": "rimraf dist && npm run build:cjs && npm run build:esm && npm run build:types",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:types": "tsc -p tsconfig.types.json",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "lint:dry": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "package": "npm run build && npm pack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Uptech Studio",
@@ -19,6 +25,7 @@
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
   }
