@@ -1,1 +1,1 @@
-# AppFit Browser SDK
+# AppFit Javascript SDK

@@ -1,6 +1,9 @@
 {
-  "name": "appfit_browser_sdk",
+  "name": "@uptechworks/appfit-javascript-sdk",
   "version": "0.0.1",
+  "keywords": [
+    "analytics"
+  ],
   "description": "An SDK to track events via the AppFit API",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -15,7 +18,7 @@
     "package": "npm run build && npm pack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Uptech Studio",
+  "author": "UpTech Works, LLC",
   "license": "ISC",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.2.0",
