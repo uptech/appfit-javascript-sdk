@@ -1,7 +1,7 @@
-import { ApiClient } from './api-client';
 import { EventCache } from './event-cache';
 import { AppFitEvent } from './models/appfit-event';
-import { appfitEventToMetricEventDto } from './models/metric-event-dto';
+import { appfitEventToMetricEventDto } from './networking/metric-event-dto';
+import { ApiClient } from './networking/api-client';
 
 class EventDigester {
   private readonly apiKey: string;
