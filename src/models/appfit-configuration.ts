@@ -1,5 +1,5 @@
 export class AppFitConfiguration {
-  private readonly apiKey: string;
+  readonly apiKey: string;
 
   constructor(apiKey: string) {
     this.apiKey = apiKey;

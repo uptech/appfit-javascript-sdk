@@ -5,11 +5,14 @@ export interface AppFitEvent {
   readonly occurredAt: string;
 }
 
-function createAppFitEvent(name: string, properties?: Record<string, string>): AppFitEvent {
+export function createAppFitEvent(
+  name: string,
+  properties?: Record<string, string>,
+): AppFitEvent {
   return {
     id: crypto.randomUUID(),
     name,
     properties,
-    occurredAt: (new Date()).toISOString(), // UTC ISO string
-  }
+    occurredAt: new Date().toISOString(), // UTC ISO string
+  };
 }

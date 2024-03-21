@@ -1,4 +1,4 @@
-import { AppFitEvent } from '../models/appfit-event';
+import { AppFitEvent } from '../../events/models/appfit-event';
 
 interface MetricEventDtoPayload {
   readonly eventId: string;

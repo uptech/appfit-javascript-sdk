@@ -1,4 +1,4 @@
-import { MetricEventDto } from './metric-event-dto';
+import { MetricEventDto } from './models/metric-event-dto';
 
 export class ApiClient {
   private readonly apiKey: string;

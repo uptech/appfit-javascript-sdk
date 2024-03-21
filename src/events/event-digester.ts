@@ -1,18 +1,15 @@
 import { EventCache } from './event-cache';
 import { AppFitEvent } from './models/appfit-event';
-import { appfitEventToMetricEventDto } from './networking/metric-event-dto';
-import { ApiClient } from './networking/api-client';
+import { appfitEventToMetricEventDto } from '../networking/models/metric-event-dto';
+import { ApiClient } from '../networking/api-client';
 
-class EventDigester {
-  private readonly apiKey: string;
-
+export class EventDigester {
   private readonly appfitCache = new UserCache();
   private readonly eventCache = new EventCache();
 
   private readonly apiClient: ApiClient;
 
-  constructor(apiKey: string, apiClient: ApiClient) {
-    this.apiKey = apiKey;
+  constructor(apiClient: ApiClient) {
     this.apiClient = apiClient;
 
     this.appfitCache.setAnonymousId();
