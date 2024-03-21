@@ -6,7 +6,7 @@ import { appfitEventToMetricEventDto } from './models/metric-event-dto';
 class EventDigester {
   private readonly apiKey: string;
 
-  private readonly appfitCache = new AppfitCache();
+  private readonly appfitCache = new UserCache();
   private readonly eventCache = new EventCache();
 
   private readonly apiClient: ApiClient;

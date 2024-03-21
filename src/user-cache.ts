@@ -1,9 +1,9 @@
-enum AppFitCacheKey {
+enum UserCacheKey {
   USER_ID = 'APPFIT_userId',
   ANONYMOUS = 'APPFIT_anonymousId',
 }
 
-class AppfitCache {
+class UserCache {
   readonly backupCache: Record<string, string | null> = {};
 
   /// Sets the [userId] in local storage.
@@ -13,21 +13,21 @@ class AppfitCache {
   /// When setting the [userId], the [anonymousId] will be removed.
   setUserId(userId?: string) {
     if (!userId) {
-      this.removeCache(AppFitCacheKey.USER_ID);
+      this.removeCache(UserCacheKey.USER_ID);
       this.setAnonymousId();
       return;
     }
 
-    this.setCache(AppFitCacheKey.USER_ID, userId);
+    this.setCache(UserCacheKey.USER_ID, userId);
   }
 
   getUserId(): string | undefined {
-    return this.readCache(AppFitCacheKey.USER_ID) ?? undefined;
+    return this.readCache(UserCacheKey.USER_ID);
   }
 
   clearCache() {
-    this.removeCache(AppFitCacheKey.USER_ID);
-    this.removeCache(AppFitCacheKey.ANONYMOUS);
+    this.removeCache(UserCacheKey.USER_ID);
+    this.removeCache(UserCacheKey.ANONYMOUS);
   }
 
   /// Generates an anonymous id if it does not exist.
@@ -44,12 +44,12 @@ class AppfitCache {
   }
 
   getAnonymousId(): string | undefined {
-    return this.readCache(AppFitCacheKey.ANONYMOUS) ?? undefined;
+    return this.readCache(UserCacheKey.ANONYMOUS);
   }
 
   private generateAnonymousId(): string {
     const anonymousId = crypto.randomUUID();
-    this.setCache(AppFitCacheKey.ANONYMOUS, anonymousId);
+    this.setCache(UserCacheKey.ANONYMOUS, anonymousId);
     return anonymousId;
   }
 
@@ -62,12 +62,12 @@ class AppfitCache {
     this.backupCache[key] = value;
   }
 
-  private readCache(key: string): string | null {
+  private readCache(key: string): string | undefined {
     if (this.hasLocalStorageExistence()) {
-      return localStorage.getItem(key);
+      return localStorage.getItem(key) ?? undefined;
     }
 
-    return this.backupCache[key] ?? null;
+    return this.backupCache[key] ?? undefined;
   }
 
   private removeCache(key: string) {
