@@ -14,11 +14,15 @@ class AppfitCache {
   setUserId(userId?: string) {
     if (!userId) {
       this.removeCache(AppFitCacheKey.USER_ID);
-      this.useAnonymousId();
+      this.setAnonymousId();
       return;
     }
 
     this.setCache(AppFitCacheKey.USER_ID, userId);
+  }
+
+  getUserId(): string | undefined {
+    return this.readCache(AppFitCacheKey.USER_ID) ?? undefined;
   }
 
   clearCache() {
@@ -29,21 +33,21 @@ class AppfitCache {
   /// Generates an anonymous id if it does not exist.
   /// This is used to identify the user in the AppFit dashboard.
   /// This checks to see if a `userId` exists, if it does not, it will generate an anonymous id.
-  private useAnonymousId() {
-    const cachedAnonymousId = this.getCachedAnonymousId();
+  setAnonymousId() {
+    const cachedAnonymousId = this.getAnonymousId();
     if (cachedAnonymousId) {
       return cachedAnonymousId;
     }
 
     // Since we don't have an anonymousId, we need to generate one
-    return this.setAnonymousId();
+    return this.generateAnonymousId();
   }
 
-  private getCachedAnonymousId(): string | null {
-    return this.readCache(AppFitCacheKey.ANONYMOUS);
+  getAnonymousId(): string | undefined {
+    return this.readCache(AppFitCacheKey.ANONYMOUS) ?? undefined;
   }
 
-  private setAnonymousId(): string {
+  private generateAnonymousId(): string {
     const anonymousId = crypto.randomUUID();
     this.setCache(AppFitCacheKey.ANONYMOUS, anonymousId);
     return anonymousId;
