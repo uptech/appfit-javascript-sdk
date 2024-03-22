@@ -1,18 +1,16 @@
-import { EventCache } from './event-cache';
+import { EventCache, IEventCache } from './event-cache';
 import { AppFitEvent } from './models/appfit-event';
 import { appfitEventToMetricEventDto } from '../networking/models/metric-event-dto';
 import { ApiClient } from '../networking/api-client';
+import { IUserCache, UserCache } from './user-cache';
 
 export class EventDigester {
-  private readonly appfitCache = new UserCache();
-  private readonly eventCache = new EventCache();
-
-  private readonly apiClient: ApiClient;
-
-  constructor(apiClient: ApiClient) {
-    this.apiClient = apiClient;
-
-    this.appfitCache.setAnonymousId();
+  constructor(
+    private readonly apiClient: ApiClient,
+    private readonly eventCache: IEventCache = new EventCache(),
+    private readonly userCache: IUserCache = new UserCache(),
+  ) {
+    this.userCache.setAnonymousId();
   }
 
   /// Digests the provided [event].
@@ -24,8 +22,8 @@ export class EventDigester {
   async digest(event: AppFitEvent) {
     const eventDto = appfitEventToMetricEventDto(
       event,
-      this.appfitCache.getUserId(),
-      this.appfitCache.getAnonymousId(),
+      this.userCache.getUserId(),
+      this.userCache.getAnonymousId(),
     );
 
     const trackResult = await this.apiClient.track(eventDto);
@@ -51,8 +49,8 @@ export class EventDigester {
     const eventDtos = events.map((event) =>
       appfitEventToMetricEventDto(
         event,
-        this.appfitCache.getUserId(),
-        this.appfitCache.getAnonymousId(),
+        this.userCache.getUserId(),
+        this.userCache.getAnonymousId(),
       ),
     );
 
@@ -65,7 +63,7 @@ export class EventDigester {
   /// When passing in `undefined`, the user will be un-identified,
   /// resulting in the user being anonymous.
   identify(userId?: string) {
-    this.appfitCache.setUserId(userId);
+    this.userCache.setUserId(userId);
   }
 
   /// Digests the cache.

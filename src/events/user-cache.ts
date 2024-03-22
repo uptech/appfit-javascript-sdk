@@ -1,10 +1,18 @@
+export interface IUserCache {
+  setUserId(userId?: string): void;
+  getUserId(): string | undefined;
+  clearCache(): void;
+  setAnonymousId(): string;
+  getAnonymousId(): string | undefined;
+}
+
 enum UserCacheKey {
   USER_ID = 'APPFIT_userId',
   ANONYMOUS = 'APPFIT_anonymousId',
 }
 
-class UserCache {
-  readonly backupCache: Record<string, string | null> = {};
+export class UserCache implements IUserCache {
+  private readonly backupCache: Record<string, string | null> = {};
 
   /// Sets the [userId] in local storage.
   /// If the [userId] is `null`, it will be removed from the cache.
@@ -33,7 +41,7 @@ class UserCache {
   /// Generates an anonymous id if it does not exist.
   /// This is used to identify the user in the AppFit dashboard.
   /// This checks to see if a `userId` exists, if it does not, it will generate an anonymous id.
-  setAnonymousId() {
+  setAnonymousId(): string {
     const cachedAnonymousId = this.getAnonymousId();
     if (cachedAnonymousId) {
       return cachedAnonymousId;

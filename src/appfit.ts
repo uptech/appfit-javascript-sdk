@@ -1,6 +1,6 @@
 import { AppFitConfiguration } from './models/appfit-configuration';
 import { EventDigester } from './events/event-digester';
-import { ApiClient } from './networking/api-client';
+import { AppfitApiClient } from './networking/api-client';
 import { AppFitEvent, createAppFitEvent } from './events/models/appfit-event';
 
 export class AppFit {
@@ -9,7 +9,9 @@ export class AppFit {
 
   constructor(configuration: AppFitConfiguration) {
     this.configuration = configuration;
-    this.eventDigestor = new EventDigester(new ApiClient(configuration.apiKey));
+    this.eventDigestor = new EventDigester(
+      new AppfitApiClient(configuration.apiKey),
+    );
   }
 
   /// Tracks an event with the provided [eventName] and [properties].

@@ -1,6 +1,11 @@
 import { MetricEventDto } from './models/metric-event-dto';
 
-export class ApiClient {
+export interface ApiClient {
+  track(eventDto: MetricEventDto): Promise<boolean>;
+  trackBatch(eventDtos: MetricEventDto[]): Promise<boolean>;
+}
+
+export class AppfitApiClient implements ApiClient {
   private readonly apiKey: string;
   private readonly baseUrl: string;
 

@@ -1,9 +1,18 @@
 import { AppFitEvent } from './models/appfit-event';
 
+export interface IEventCache {
+  entries: AppFitEvent[];
+
+  add(event: AppFitEvent): void;
+  removeById(eventId: string): void;
+  remove(event: AppFitEvent): void;
+  clear(): void;
+}
+
 // EventCache is used as a backup for events that failed when sending
 // a network request. We can re-try these events when internet access
 // is restored.
-export class EventCache {
+export class EventCache implements IEventCache {
   private cache: Map<string, AppFitEvent> = new Map<string, AppFitEvent>();
 
   /// An array of all cached events
