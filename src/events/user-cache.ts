@@ -14,7 +14,7 @@ enum UserCacheKey {
 }
 
 export class UserCache implements IUserCache {
-  private readonly backupCache: Record<string, string | null> = {};
+  private readonly backupCache = new Map<string, string | null>();
 
   constructor(
     private readonly generateUuid: () => UUID = generateUuid,
@@ -74,7 +74,7 @@ export class UserCache implements IUserCache {
       return;
     }
 
-    this.backupCache[key] = value;
+    this.backupCache.set(key, value);
   }
 
   private readCache(key: string): string | undefined {
@@ -82,7 +82,7 @@ export class UserCache implements IUserCache {
       return localStorage.getItem(key) ?? undefined;
     }
 
-    return this.backupCache[key] ?? undefined;
+    return this.backupCache.get(key) ?? undefined;
   }
 
   private removeCache(key: string) {
@@ -90,6 +90,6 @@ export class UserCache implements IUserCache {
       return localStorage.removeItem(key);
     }
 
-    this.backupCache[key] = null;
+    this.backupCache.delete(key);
   }
 }
