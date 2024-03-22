@@ -1,5 +1,5 @@
 export function hello(greeting: string): string {
-    return `Hello ${greeting}`;
+  return `Hello ${greeting}`;
 }
 
-console.log(hello("world"));
+console.log(hello('world'));
