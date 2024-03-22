@@ -16,7 +16,10 @@ enum UserCacheKey {
 export class UserCache implements IUserCache {
   private readonly backupCache: Record<string, string | null> = {};
 
-  constructor(private readonly generateUuid: () => UUID = generateUuid) {}
+  constructor(
+    private readonly generateUuid: () => UUID = generateUuid,
+    private readonly hasLocalStorageExistence: boolean = !!global.localStorage,
+  ) {}
 
   /// Sets the [userId] in local storage.
   /// If the [userId] is `null`, it will be removed from the cache.
@@ -66,7 +69,7 @@ export class UserCache implements IUserCache {
   }
 
   private setCache(key: string, value: string) {
-    if (this.hasLocalStorageExistence()) {
+    if (this.hasLocalStorageExistence) {
       localStorage.setItem(key, value);
       return;
     }
@@ -75,7 +78,7 @@ export class UserCache implements IUserCache {
   }
 
   private readCache(key: string): string | undefined {
-    if (this.hasLocalStorageExistence()) {
+    if (this.hasLocalStorageExistence) {
       return localStorage.getItem(key) ?? undefined;
     }
 
@@ -83,14 +86,10 @@ export class UserCache implements IUserCache {
   }
 
   private removeCache(key: string) {
-    if (this.hasLocalStorageExistence()) {
+    if (this.hasLocalStorageExistence) {
       return localStorage.removeItem(key);
     }
 
     this.backupCache[key] = null;
-  }
-
-  private hasLocalStorageExistence(): boolean {
-    return !!global.localStorage;
   }
 }
