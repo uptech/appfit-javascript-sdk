@@ -1,5 +1,4 @@
-export function hello(greeting: string): string {
-  return `Hello ${greeting}`;
-}
+export { AppFitConfiguration } from './models/appfit-configuration';
+export { AppFitEvent } from './events/models/appfit-event';
 
-console.log(hello('world'));
+export { AppFit } from './appfit';
