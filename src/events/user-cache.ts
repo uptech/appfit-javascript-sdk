@@ -1,3 +1,5 @@
+import { UUID } from '../utils/uuid';
+
 export interface IUserCache {
   setUserId(userId?: string): void;
   getUserId(): string | undefined;
@@ -13,6 +15,8 @@ enum UserCacheKey {
 
 export class UserCache implements IUserCache {
   private readonly backupCache: Record<string, string | null> = {};
+
+  constructor(private readonly generateUuid: () => UUID = generateUuid) {}
 
   /// Sets the [userId] in local storage.
   /// If the [userId] is `null`, it will be removed from the cache.
@@ -56,7 +60,7 @@ export class UserCache implements IUserCache {
   }
 
   private generateAnonymousId(): string {
-    const anonymousId = crypto.randomUUID();
+    const anonymousId = this.generateUuid();
     this.setCache(UserCacheKey.ANONYMOUS, anonymousId);
     return anonymousId;
   }

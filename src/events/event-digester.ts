@@ -1,16 +1,32 @@
 import { EventCache, IEventCache } from './event-cache';
-import { AppFitEvent } from './models/appfit-event';
+import { AppFitEvent, createAppFitEvent } from './models/appfit-event';
 import { appfitEventToMetricEventDto } from '../networking/models/metric-event-dto';
 import { ApiClient } from '../networking/api-client';
 import { IUserCache, UserCache } from './user-cache';
+import { UUID } from '../utils/uuid';
 
-export class EventDigester {
+export interface IEventDigest {
+  track(eventName: string, payload: Record<string, string>): Promise<void>;
+  digest(event: AppFitEvent): Promise<void>;
+  batchDigest(events: AppFitEvent[]): Promise<boolean>;
+  identify(userId?: string): void;
+}
+
+export class EventDigester implements IEventDigest {
   constructor(
     private readonly apiClient: ApiClient,
     private readonly eventCache: IEventCache = new EventCache(),
     private readonly userCache: IUserCache = new UserCache(),
+    private readonly generateUuid: () => UUID = generateUuid,
   ) {
     this.userCache.setAnonymousId();
+  }
+
+  /// Creates and then digests an event with the provided [eventName] and [properties]
+  async track(eventName: string, payload: Record<string, string>) {
+    const id = this.generateUuid();
+    const event = createAppFitEvent(id, eventName, payload);
+    return this.digest(event);
   }
 
   /// Digests the provided [event].

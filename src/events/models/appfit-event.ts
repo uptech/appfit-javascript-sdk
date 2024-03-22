@@ -1,3 +1,5 @@
+import { UUID } from '../../utils/uuid';
+
 export interface AppFitEvent {
   readonly id: string;
   readonly name: string;
@@ -6,11 +8,12 @@ export interface AppFitEvent {
 }
 
 export function createAppFitEvent(
+  id: UUID,
   name: string,
   properties?: Record<string, string>,
 ): AppFitEvent {
   return {
-    id: crypto.randomUUID(),
+    id,
     name,
     properties,
     occurredAt: new Date().toISOString(), // UTC ISO string
