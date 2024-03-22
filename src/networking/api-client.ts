@@ -1,10 +1,13 @@
 import { MetricEventDto } from './models/metric-event-dto';
+import { authenticatedPost } from './http-utils';
 
+/** @internal */
 export interface ApiClient {
   track(eventDto: MetricEventDto): Promise<boolean>;
   trackBatch(eventDtos: MetricEventDto[]): Promise<boolean>;
 }
 
+/** @internal */
 export class AppfitApiClient implements ApiClient {
   private readonly apiKey: string;
   private readonly baseUrl: string;

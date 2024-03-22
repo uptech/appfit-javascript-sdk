@@ -5,6 +5,7 @@ import { ApiClient } from '../networking/api-client';
 import { IUserCache, UserCache } from './user-cache';
 import { UUID } from '../utils/uuid';
 
+/** @internal */
 export interface IEventDigest {
   track(eventName: string, payload: Record<string, string>): Promise<void>;
   digest(event: AppFitEvent): Promise<void>;
@@ -12,6 +13,7 @@ export interface IEventDigest {
   identify(userId?: string): void;
 }
 
+/** @internal */
 export class EventDigester implements IEventDigest {
   constructor(
     private readonly apiClient: ApiClient,

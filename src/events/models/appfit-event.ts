@@ -7,6 +7,7 @@ export interface AppFitEvent {
   readonly occurredAt: string;
 }
 
+/** @internal */
 export function createAppFitEvent(
   id: UUID,
   name: string,

@@ -1,5 +1,6 @@
 import { AppFitEvent } from '../../events/models/appfit-event';
 
+/** @internal */
 interface MetricEventDtoPayload {
   readonly eventId: string;
   readonly name: string;
@@ -9,11 +10,13 @@ interface MetricEventDtoPayload {
   readonly systemProperties?: Record<string, string>;
 }
 
+/** @internal */
 export interface MetricEventDto {
   readonly occurredAt: string;
   readonly payload: MetricEventDtoPayload;
 }
 
+/** @internal */
 export function appfitEventToMetricEventDto(
   appfitEvent: AppFitEvent,
   userId?: string,

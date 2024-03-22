@@ -1,13 +1,18 @@
-async function authenticatedPost(url: string, apiKey: string, data = {}): Promise<Response> {
+/** @internal */
+export async function authenticatedPost(
+  url: string,
+  apiKey: string,
+  data = {},
+): Promise<Response> {
   const headers = {
-    "Content-Type": "application/json",
-    "authorization": `Basic ${apiKey}`
-  }
+    'Content-Type': 'application/json',
+    authorization: `Basic ${apiKey}`,
+  };
 
   return fetch(url, {
-    method: "POST",
+    method: 'POST',
     headers,
     mode: 'cors',
     body: JSON.stringify(data),
-  })
+  });
 }

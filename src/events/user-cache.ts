@@ -1,5 +1,6 @@
 import { UUID } from '../utils/uuid';
 
+/** @internal */
 export interface IUserCache {
   setUserId(userId?: string): void;
   getUserId(): string | undefined;
@@ -13,6 +14,7 @@ enum UserCacheKey {
   ANONYMOUS = 'APPFIT_anonymousId',
 }
 
+/** @internal */
 export class UserCache implements IUserCache {
   private readonly backupCache = new Map<string, string | null>();
 
