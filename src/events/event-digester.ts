@@ -46,6 +46,7 @@ export class EventDigester implements IEventDigest {
     if (!trackResult) {
       // cache in case of failure
       this.eventCache.add(event);
+      return;
     }
     // make sure successful events aren't cached
     this.eventCache.removeById(event.id);
