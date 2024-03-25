@@ -1,10 +1,10 @@
 {
-  "name": "@uptechworks/appfit-server-sdk",
+  "name": "@uptechworks/appfit-node-sdk",
   "version": "0.0.1",
   "keywords": [
     "analytics"
   ],
-  "description": "A Javascript server SDK to track events via the AppFit API",
+  "description": "A Javascript Node SDK to track events via the AppFit API",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.js",

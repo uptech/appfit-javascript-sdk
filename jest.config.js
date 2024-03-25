@@ -15,8 +15,8 @@ module.exports = {
     },
     {
       preset: "ts-jest",
-      displayName: "appfit-server-sdk",
-      testMatch: ['<rootDir>/packages/appfit-server-sdk/**/*.spec.ts'],
+      displayName: "appfit-node-sdk",
+      testMatch: ['<rootDir>/packages/appfit-node-sdk/**/*.spec.ts'],
     },
     {
       preset: "ts-jest",
