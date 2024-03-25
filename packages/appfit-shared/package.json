@@ -1,10 +1,6 @@
 {
-  "name": "@uptechworks/appfit-browser-sdk",
+  "name": "@uptechworks/appfit-shared",
   "version": "0.0.1",
-  "keywords": [
-    "analytics"
-  ],
-  "description": "A Javascript browser SDK to track events via the AppFit API",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.js",
@@ -30,11 +26,10 @@
     "lint:dry": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "package": "npm run build && npm pack",
     "prepublishOnly": "npm run build",
-    "prettier": "npx prettier . --write"
+    "prettier": "npx prettier . --write",
+    "test": "jest --no-cache --runInBand",
+    "test:cov": "jest --coverage --no-cache --runInBand"
   },
   "author": "UpTech Works, LLC",
-  "license": "MIT",
-  "dependencies": {
-    "@uptechworks/appfit-shared": "*"
-  }
+  "license": "MIT"
 }

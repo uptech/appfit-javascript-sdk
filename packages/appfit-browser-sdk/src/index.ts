@@ -1,4 +1,4 @@
-export { AppFitConfiguration } from './models/appfit-configuration';
-export { AppFitEvent } from './events/models/appfit-event';
+export { AppFitBrowserConfiguration } from './models/app-fit-browser-configuration';
+export { AppFitEvent } from '@uptechworks/appfit-shared';
 
 export { AppFit } from './appfit';

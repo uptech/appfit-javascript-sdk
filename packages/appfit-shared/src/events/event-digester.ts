@@ -1,9 +1,9 @@
-import { EventCache, IEventCache } from './event-cache';
 import { AppFitEvent, createAppFitEvent } from './models/appfit-event';
 import { appfitEventToMetricEventDto } from '../networking/models/metric-event-dto';
-import { ApiClient } from '../networking/api-client';
-import { IUserCache, UserCache } from './user-cache';
+import { IApiClient } from '../networking/api-client';
 import { UUID } from '../utils/uuid';
+import { IEventCache } from './models/event-cache.interface';
+import { IUserCache } from './models/user-cache.interface';
 
 /** @internal */
 export interface IEventDigest {
@@ -16,9 +16,9 @@ export interface IEventDigest {
 /** @internal */
 export class EventDigester implements IEventDigest {
   constructor(
-    private readonly apiClient: ApiClient,
-    private readonly eventCache: IEventCache = new EventCache(),
-    private readonly userCache: IUserCache = new UserCache(),
+    private readonly apiClient: IApiClient,
+    private readonly eventCache: IEventCache,
+    private readonly userCache: IUserCache,
     private readonly generateUuid: () => UUID = generateUuid,
   ) {
     this.userCache.setAnonymousId();

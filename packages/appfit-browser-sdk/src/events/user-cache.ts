@@ -1,13 +1,4 @@
-import { UUID } from '../utils/uuid';
-
-/** @internal */
-export interface IUserCache {
-  setUserId(userId?: string): void;
-  getUserId(): string | undefined;
-  clearCache(): void;
-  setAnonymousId(): string;
-  getAnonymousId(): string | undefined;
-}
+import { IUserCache, UUID } from '@uptechworks/appfit-shared';
 
 enum UserCacheKey {
   USER_ID = 'APPFIT_userId',

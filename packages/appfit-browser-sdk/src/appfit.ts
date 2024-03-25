@@ -1,16 +1,23 @@
-import { AppFitConfiguration } from './models/appfit-configuration';
-import { EventDigester, IEventDigest } from './events/event-digester';
-import { AppfitApiClient } from './networking/api-client';
-import { AppFitEvent } from './events/models/appfit-event';
+import { AppFitBrowserConfiguration } from './models/app-fit-browser-configuration';
+import {
+  AppFitApiClient,
+  AppFitEvent,
+  EventDigester,
+  IEventDigest,
+} from '@uptechworks/appfit-shared';
+import { EventCache } from './events/event-cache';
+import { UserCache } from './events/user-cache';
 
 export class AppFit {
-  private readonly configuration: AppFitConfiguration;
+  private readonly configuration: AppFitBrowserConfiguration;
   private readonly eventDigestor: IEventDigest;
 
-  constructor(configuration: AppFitConfiguration) {
+  constructor(configuration: AppFitBrowserConfiguration) {
     this.configuration = configuration;
     this.eventDigestor = new EventDigester(
-      new AppfitApiClient(configuration.apiKey),
+      new AppFitApiClient(configuration.apiKey),
+      new EventCache(),
+      new UserCache(),
     );
   }
 

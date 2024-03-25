@@ -6,7 +6,24 @@ module.exports = {
     "json",
     "ts"
   ],
-  rootDir: "src",
+  rootDir: ".",
+  projects: [
+    {
+      preset: "ts-jest",
+      displayName: "appfit-browser-sdk",
+      testMatch: ['<rootDir>/packages/appfit-browser-sdk/**/*.spec.ts'],
+    },
+    {
+      preset: "ts-jest",
+      displayName: "appfit-server-sdk",
+      testMatch: ['<rootDir>/packages/appfit-server-sdk/**/*.spec.ts'],
+    },
+    {
+      preset: "ts-jest",
+      displayName: "appfit-shared",
+      testMatch: ['<rootDir>/packages/appfit-shared/**/*.spec.ts'],
+    },
+  ],
   testRegex: ".*\\.spec\\.ts$",
   transform: {
     "^.+\\.(t|j)s$": "ts-jest"
@@ -14,6 +31,6 @@ module.exports = {
   collectCoverageFrom: [
     "**/*.(t|j)s"
   ],
-  coverageDirectory: "../coverage",
+  coverageDirectory: "./coverage",
   testEnvironment: 'node',
 };

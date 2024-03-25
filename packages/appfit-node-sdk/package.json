@@ -26,9 +26,7 @@
     "lint:dry": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "package": "npm run build && npm pack",
     "prepublishOnly": "npm run build",
-    "prettier": "npx prettier . --write",
-    "test": "jest --no-cache --runInBand",
-    "test:cov": "jest --coverage --no-cache --runInBand"
+    "prettier": "npx prettier . --write"
   },
   "author": "UpTech Works, LLC",
   "license": "MIT",

@@ -1,14 +1,4 @@
-import { AppFitEvent } from './models/appfit-event';
-
-/** @internal */
-export interface IEventCache {
-  entries: AppFitEvent[];
-
-  add(event: AppFitEvent): void;
-  removeById(eventId: string): void;
-  remove(event: AppFitEvent): void;
-  clear(): void;
-}
+import { AppFitEvent, IEventCache } from '@uptechworks/appfit-shared';
 
 // EventCache is used as a backup for events that failed when sending
 // a network request. We can re-try these events when internet access
