@@ -1,7 +1,7 @@
-import { EventDigester } from '../events/event-digester';
-import { ApiClient } from '../networking/api-client';
-import { UserCache } from '../events/user-cache';
-import { EventCache } from '../events/event-cache';
+import { EventDigester } from '../src/events/event-digester';
+import { ApiClient } from '../src/networking/api-client';
+import { UserCache } from '../src/events/user-cache';
+import { EventCache } from '../src/events/event-cache';
 
 const mockApiClient: jest.Mocked<ApiClient> = {
   track: jest.fn(),
