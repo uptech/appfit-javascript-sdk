@@ -1,6 +1,6 @@
 {
   "name": "@uptechworks/appfit-browser-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "keywords": [
     "analytics"
   ],
@@ -33,6 +33,6 @@
   "author": "UpTech Works, LLC",
   "license": "MIT",
   "dependencies": {
-    "@uptechworks/appfit-shared": "*"
+    "@uptechworks/appfit-shared": "^0.0.2"
   }
 }
