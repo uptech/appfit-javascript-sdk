@@ -40,3 +40,6 @@ lerna-debug.log*
 #Terraform
 .terraform
 .terraform.lock.hcl
+
+#Parcel
+.parcel-cache/

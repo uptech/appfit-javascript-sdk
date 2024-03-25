@@ -11,7 +11,7 @@ export class UserCache implements IUserCache {
 
   constructor(
     private readonly generateUuid: () => UUID = generateUuid,
-    private readonly hasLocalStorageExistence: boolean = !!global.localStorage,
+    private readonly hasLocalStorageExistence: boolean = !!localStorage,
   ) {}
 
   /// Sets the [userId] in local storage.
