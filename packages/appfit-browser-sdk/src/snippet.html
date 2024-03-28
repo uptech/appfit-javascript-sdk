@@ -1,0 +1,12 @@
+<script>
+  window.AppFit = {};
+  function startAppFit(writeKey) {
+    window.AppFit.apiKey = writeKey;
+    var script = document.createElement('script');
+    script.type = 'application/javascript';
+    script.src = 'https://unpkg.com/@june-so/analytics-next/dist/umd/standalone.js';
+    var first = document.getElementsByTagName('script')[0];
+    first.parentNode.insertBefore(script, first);
+  }
+  startAppFit('YOUR_WRITE_KEY');
+</script>
