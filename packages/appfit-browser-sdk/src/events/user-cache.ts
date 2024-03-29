@@ -1,4 +1,4 @@
-import { IUserCache, UUID } from '@uptechworks/appfit-shared';
+import { generateNewUuid, IUserCache, UUID } from '../../../appfit-shared';
 
 enum UserCacheKey {
   USER_ID = 'APPFIT_userId',
@@ -10,7 +10,7 @@ export class UserCache implements IUserCache {
   private readonly backupCache = new Map<string, string | null>();
 
   constructor(
-    private readonly generateUuid: () => UUID = generateUuid,
+    private readonly generateUuid: () => UUID = generateNewUuid,
     private readonly hasLocalStorageExistence: boolean = !!localStorage,
   ) {}
 

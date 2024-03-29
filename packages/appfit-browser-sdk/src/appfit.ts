@@ -4,7 +4,7 @@ import {
   AppFitEvent,
   EventDigester,
   IEventDigest,
-} from '@uptechworks/appfit-shared';
+} from '../../appfit-shared';
 import { EventCache } from './events/event-cache';
 import { UserCache } from './events/user-cache';
 

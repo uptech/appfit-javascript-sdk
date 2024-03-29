@@ -6,7 +6,7 @@ export async function authenticatedPost(
 ): Promise<Response> {
   const headers = {
     'Content-Type': 'application/json',
-    authorization: `Basic ${apiKey}`,
+    Authorization: `Basic ${apiKey}`,
   };
 
   return fetch(url, {

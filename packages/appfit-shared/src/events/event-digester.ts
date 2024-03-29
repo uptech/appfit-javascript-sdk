@@ -1,7 +1,7 @@
 import { AppFitEvent, createAppFitEvent } from './models/appfit-event';
 import { appfitEventToMetricEventDto } from '../networking/models/metric-event-dto';
 import { IApiClient } from '../networking/api-client';
-import { UUID } from '../utils/uuid';
+import { generateNewUuid, UUID } from '../utils/uuid';
 import { IEventCache } from './models/event-cache.interface';
 import { IUserCache } from './models/user-cache.interface';
 
@@ -19,7 +19,7 @@ export class EventDigester implements IEventDigest {
     private readonly apiClient: IApiClient,
     private readonly eventCache: IEventCache,
     private readonly userCache: IUserCache,
-    private readonly generateUuid: () => UUID = generateUuid,
+    private readonly generateUuid: () => UUID = generateNewUuid,
   ) {
     this.userCache.setAnonymousId();
   }

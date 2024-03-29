@@ -1,4 +1,4 @@
-import { AppFitEvent, IEventCache } from '@uptechworks/appfit-shared';
+import { AppFitEvent, IEventCache } from '../../../appfit-shared';
 
 // EventCache is used as a backup for events that failed when sending
 // a network request. We can re-try these events when internet access

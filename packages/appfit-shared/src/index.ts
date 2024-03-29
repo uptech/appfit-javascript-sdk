@@ -1,6 +1,7 @@
 export { AppFitConfiguration } from './models/appfit-configuration';
 export { EventDigester } from './events/event-digester';
 export { AppFitApiClient } from './networking/api-client';
+export { generateNewUuid } from './utils/uuid';
 
 export type { IEventCache } from './events/models/event-cache.interface';
 export type { IUserCache } from './events/models/user-cache.interface';

@@ -29,6 +29,7 @@ export class AppFitApiClient implements IApiClient {
 
     return responsePromise.then(
       (response) => {
+        console.log('JSON', response.json());
         // return true if response status is in 200s
         return (
           !!response.status && response.status >= 200 && response.status < 300

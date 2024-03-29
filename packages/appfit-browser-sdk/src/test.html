@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Test Website</title>
+<!--  <script type="module" src="../dist/esm/index.js"></script>-->
+  <script>
+    window.AppFit = {
+      cache: {},
+      trackEvent(eventName, payload) {
+        if (!window.AppFit.cache) {
+          window.AppFit.cache = {}
+        }
+        if (!window.AppFit.cache.events) {
+          window.AppFit.cache.events = [];
+        }
+        window.AppFit.cache.events.push({ eventName: eventName, payload: payload })
+
+        return Promise.resolve();
+      },
+      identifyUser(userId) {
+        if (!window.AppFit.cache) {
+          window.AppFit.cache = {}
+        }
+        window.AppFit.cache.identity = userId;
+      }
+    };
+    function startAppFit(apiKey) {
+      window.AppFit.apiKey = apiKey;
+      var script = document.createElement('script');
+      script.type = 'module';
+      script.src = '../dist/esm/index.js';
+      var first = document.getElementsByTagName('script')[0];
+      first.parentNode.insertBefore(script, first);
+    }
+    startAppFit('YOUR_WRITE_KEY');
+  </script>
+  <script>
+    console.log('track', window.AppFit)
+    window.AppFit.trackEvent('test', { testProperty: 'testValue'})
+  </script>
+
+</head>
+<body>
+<main>
+  <h1>Welcome to My Website</h1>
+</main>
+</body>
+</html>

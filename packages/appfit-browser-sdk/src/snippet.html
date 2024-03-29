@@ -1,10 +1,29 @@
 <script>
-  window.AppFit = {};
-  function startAppFit(writeKey) {
-    window.AppFit.apiKey = writeKey;
+  window.AppFit = {
+    cache: {},
+    trackEvent(eventName, payload) {
+      if (!window.AppFit.cache) {
+        window.AppFit.cache = {}
+      }
+      if (!window.AppFit.cache.events) {
+        window.AppFit.cache.events = [];
+      }
+      window.AppFit.cache.events.push({ eventName: eventName, payload: payload })
+
+      return Promise.resolve();
+    },
+    identifyUser(userId) {
+      if (!window.AppFit.cache) {
+        window.AppFit.cache = {}
+      }
+      window.AppFit.cache.identity = userId;
+    }
+  };
+  function startAppFit(apiKey) {
+    window.AppFit.apiKey = apiKey;
     var script = document.createElement('script');
     script.type = 'application/javascript';
-    script.src = 'https://unpkg.com/@june-so/analytics-next/dist/umd/standalone.js';
+    script.src = 'src';
     var first = document.getElementsByTagName('script')[0];
     first.parentNode.insertBefore(script, first);
   }
