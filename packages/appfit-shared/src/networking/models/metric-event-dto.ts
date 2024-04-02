@@ -14,6 +14,7 @@ interface MetricEventDtoPayload {
 export interface MetricEventDto {
   readonly occurredAt: string;
   readonly payload: MetricEventDtoPayload;
+  readonly eventSource: 'appfit'; // this is always 'appfit' for our sdks
 }
 
 /** @internal */
@@ -32,5 +33,6 @@ export function appfitEventToMetricEventDto(
       properties: appfitEvent.properties,
       // systemProperties,
     },
+    eventSource: 'appfit',
   };
 }

@@ -40,6 +40,7 @@ describe('EventDigester', () => {
             myProperty: 'myValue',
           },
         },
+        eventSource: 'appfit',
       });
     });
 
@@ -60,6 +61,7 @@ describe('EventDigester', () => {
             myProperty: 'myValue',
           },
         },
+        eventSource: 'appfit',
       });
     });
 
@@ -124,6 +126,7 @@ describe('EventDigester', () => {
             myProperty: 'myValue',
           },
         },
+        eventSource: 'appfit',
       });
     });
 
