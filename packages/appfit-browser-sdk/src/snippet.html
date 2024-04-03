@@ -22,10 +22,14 @@
   function startAppFit(apiKey) {
     window.AppFit.apiKey = apiKey;
     var script = document.createElement('script');
-    script.type = 'application/javascript';
-    script.src = 'src';
+    script.type = 'module';
+    script.src = 'https://d1433kipn7zjh1.cloudfront.net/appfit.js';
+    var fallbackScript = document.createElement('script');
+    fallbackScript.noModule = true;
+    fallbackScript.src = 'https://d1433kipn7zjh1.cloudfront.net/appfit-legacy.js';
     var first = document.getElementsByTagName('script')[0];
     first.parentNode.insertBefore(script, first);
+    first.parentNode.insertBefore(fallbackScript, first);
   }
   startAppFit('YOUR_WRITE_KEY');
 </script>

@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Test Website</title>
-<!--  <script type="module" src="../dist/esm/index.js"></script>-->
   <script>
     window.AppFit = {
       cache: {},
@@ -31,15 +30,19 @@
       window.AppFit.apiKey = apiKey;
       var script = document.createElement('script');
       script.type = 'module';
-      script.src = '../dist/esm/index.js';
+      script.src = 'https://d1433kipn7zjh1.cloudfront.net/appfit.js';
+      var fallbackScript = document.createElement('script');
+      fallbackScript.noModule = true;
+      fallbackScript.src = 'https://d1433kipn7zjh1.cloudfront.net/appfit-legacy.js';
       var first = document.getElementsByTagName('script')[0];
       first.parentNode.insertBefore(script, first);
+      first.parentNode.insertBefore(fallbackScript, first);
     }
     startAppFit('YOUR_WRITE_KEY');
   </script>
   <script>
     console.log('track', window.AppFit)
-    window.AppFit.trackEvent('test', { testProperty: 'testValue'})
+    window.AppFit.trackEvent('screen_viewed', { screen: 'test-screen'})
   </script>
 
 </head>

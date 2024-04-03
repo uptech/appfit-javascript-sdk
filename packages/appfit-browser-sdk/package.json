@@ -6,6 +6,8 @@
   ],
   "description": "A Javascript browser SDK to track events via the AppFit API",
   "source": "src/index.ts",
+  "modern-browser": "dist/browser/appfit.js",
+  "legacy-browser": "dist/legacy-browser/appfit-legacy.js",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
@@ -13,6 +15,18 @@
     ".": {
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
+    }
+  },
+  "targets": {
+    "modern-browser": {
+      "engines": {
+        "browsers": "Chrome 80"
+      }
+    },
+    "legacy-browser": {
+      "engines": {
+        "browsers": "> 0.5%, last 2 versions, not dead"
+      }
     }
   },
   "files": [
