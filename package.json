@@ -9,12 +9,12 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "lint:dry": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "package": "npm run build && npm pack",
-    "prepublishOnly": "npm run build",
     "prettier": "npx prettier . --write",
-    "publish": "npx lerna pubish",
+    "deploy:publish": "npx lerna publish from-package --yes",
+    "deploy:version": "npx lerna version",
     "test": "jest --no-cache --runInBand",
     "test:cov": "jest --coverage --no-cache --runInBand",
-    "version": "npx lerna version"
+    "display-version": "echo $npm_package_version"
   },
   "author": "UpTech Works, LLC",
   "license": "MIT",

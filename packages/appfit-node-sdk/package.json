@@ -1,6 +1,7 @@
 {
   "name": "@uptechworks/appfit-node-sdk",
   "version": "0.0.2",
+  "private": true,
   "keywords": [
     "analytics"
   ],
@@ -25,7 +26,8 @@
     "package": "npm run build && npm pack",
     "prepublishOnly": "npm run build",
     "prettier": "npx prettier . --write",
-    "watch": "npx parcel watch"
+    "watch": "npx parcel watch",
+    "display-version": "echo $npm_package_version"
   },
   "author": "UpTech Works, LLC",
   "license": "MIT",

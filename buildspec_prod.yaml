@@ -1,0 +1,39 @@
+version: 0.2
+env:
+  secrets-manager:
+    NPM_TOKEN: arn:aws:secretsmanager:us-west-2:205830496597:secret:dev/npmjs/token-rEDLLX
+phases:
+  install:
+    commands:
+      - echo Setting PACKAGE_VERSION to $PACKAGE_VERSION
+      - cd packages/appfit-browser-sdk/
+      - PACKAGE_VERSION=$(npm run display-version --silent)
+      - cd ../..
+      - echo Setting NPM token
+      - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+      - echo Installing...
+      - npm install -g npm@10.5.0
+      - npm i
+
+  pre_build:
+    commands:
+      - echo Running tests...
+      - npm run test
+
+  build:
+    commands:
+      - echo Building...
+      - npm run build
+
+  post_build:
+    commands:
+      - echo Replacing current SDK in S3
+      - aws s3 cp packages/appfit-browser-sdk/dist/browser/appfit.js s3://appfit-prod-cdn-storage/browser-sdk/appfit.js
+      - aws s3 cp packages/appfit-browser-sdk/dist/legacy-browser/appfit-legacy.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-legacy.js
+
+      - echo Archiving build in S3
+      - aws s3 cp packages/appfit-browser-sdk/dist/browser/appfit.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-v$PACKAGE_VERSION.js
+      - aws s3 cp packages/appfit-browser-sdk/dist/legacy-browser/appfit-legacy.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-legacy-v$PACKAGE_VERSION.js
+
+      - echo Publishing to NPM
+      - npm run deploy:publish
