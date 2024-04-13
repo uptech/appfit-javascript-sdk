@@ -5,40 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Test Website</title>
-  <script>
-    window.AppFit = {
-      cache: {},
-      trackEvent(eventName, payload) {
-        if (!window.AppFit.cache) {
-          window.AppFit.cache = {}
-        }
-        if (!window.AppFit.cache.events) {
-          window.AppFit.cache.events = [];
-        }
-        window.AppFit.cache.events.push({ eventName: eventName, payload: payload })
-
-        return Promise.resolve();
-      },
-      identifyUser(userId) {
-        if (!window.AppFit.cache) {
-          window.AppFit.cache = {}
-        }
-        window.AppFit.cache.identity = userId;
-      }
-    };
-    function startAppFit(apiKey) {
-      window.AppFit.apiKey = apiKey;
-      var script = document.createElement('script');
-      script.type = 'module';
-      script.src = 'https://d1433kipn7zjh1.cloudfront.net/appfit.js';
-      var fallbackScript = document.createElement('script');
-      fallbackScript.noModule = true;
-      fallbackScript.src = 'https://d1433kipn7zjh1.cloudfront.net/appfit-legacy.js';
-      var first = document.getElementsByTagName('script')[0];
-      first.parentNode.insertBefore(script, first);
-      first.parentNode.insertBefore(fallbackScript, first);
-    }
-    startAppFit('YOUR_WRITE_KEY');
+  <script>window.AppFit={cache:{},trackEvent:(e,t)=>(window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.events||(window.AppFit.cache.events=[]),window.AppFit.cache.events.push({eventName:e,payload:t}),Promise.resolve()),identifyUser(e){window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.identity=e}},window.startAppFit=e=>{window.AppFit.apiKey=e;var t=document.createElement("script");t.type="module",t.src="https://d1433kipn7zjh1.cloudfront.net/appfit.js";var p=document.createElement("script");p.noModule=!0,p.src="https://d1433kipn7zjh1.cloudfront.net/appfit-legacy.js";var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(t,i),i.parentNode.insertBefore(p,i)},
+    window.startAppFit("YOUR_WRITE_KEY");
   </script>
   <script>
     console.log('track', window.AppFit)

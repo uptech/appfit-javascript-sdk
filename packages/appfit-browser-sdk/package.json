@@ -19,11 +19,19 @@
   },
   "targets": {
     "modern-browser": {
+      "sourceMap": false,
       "engines": {
         "browsers": "Chrome 80"
       }
     },
     "legacy-browser": {
+      "sourceMap": false,
+      "engines": {
+        "browsers": "> 0.5%, last 2 versions, not dead"
+      }
+    },
+    "snippet": {
+      "source": "src/snippet.html",
       "engines": {
         "browsers": "> 0.5%, last 2 versions, not dead"
       }

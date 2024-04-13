@@ -19,7 +19,7 @@
       window.AppFit.cache.identity = userId;
     }
   };
-  function startAppFit(apiKey) {
+  window.startAppFit = (apiKey) => {
     window.AppFit.apiKey = apiKey;
     var script = document.createElement('script');
     script.type = 'module';
@@ -31,5 +31,5 @@
     first.parentNode.insertBefore(script, first);
     first.parentNode.insertBefore(fallbackScript, first);
   }
-  startAppFit('YOUR_WRITE_KEY');
+  window.startAppFit('YOUR_WRITE_KEY');
 </script>
