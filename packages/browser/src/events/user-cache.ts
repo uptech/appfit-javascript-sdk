@@ -1,4 +1,4 @@
-import { generateNewUuid, IUserCache, UUID } from '../../../appfit-shared';
+import { generateNewUuid, IUserCache, UUID } from '@uptechworks/appfit-shared';
 
 enum UserCacheKey {
   USER_ID = 'APPFIT_userId',

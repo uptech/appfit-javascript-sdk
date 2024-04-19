@@ -1,7 +1,9 @@
-import { AppFit } from './appfit';
-import { AppFitBrowserConfiguration } from './models/app-fit-browser-configuration';
+import {
+  AppFit,
+  AppFitBrowserConfiguration,
+} from '@uptechworks/appfit-browser-sdk';
 
-export interface GlobalAppFit {
+interface GlobalAppFit {
   apiKey?: string;
   client?: AppFit;
   cache?: {
@@ -18,7 +20,7 @@ declare global {
   }
 }
 
-export async function appfitInstall(apiKey?: string) {
+async function appfitInstall(apiKey?: string) {
   if (!apiKey) {
     console.error('No API key provided');
     return;
@@ -40,3 +42,8 @@ export async function appfitInstall(apiKey?: string) {
   }
   window.AppFit.cache = undefined;
 }
+
+appfitInstall(window.AppFit?.apiKey).catch((reason: any) => {
+  console.error('Failed to initialize AppFit');
+  console.error(reason);
+});

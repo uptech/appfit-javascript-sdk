@@ -3,7 +3,6 @@
   "version": "0.0.2",
   "private": true,
   "source": "src/index.ts",
-  "browser": "dist/browser/index.js",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
@@ -13,11 +12,6 @@
       "require": "./dist/cjs/index.js"
     }
   },
-  "browserslist": [
-    "last 2 versions",
-    "> 0.5%",
-    "not dead"
-  ],
   "files": [
     "dist/"
   ],

@@ -10,18 +10,18 @@ module.exports = {
   projects: [
     {
       preset: "ts-jest",
-      displayName: "appfit-browser-sdk",
-      testMatch: ['<rootDir>/packages/appfit-browser-sdk/**/*.spec.ts'],
+      displayName: "cdn",
+      testMatch: ['<rootDir>/packages/cdn/**/*.spec.ts'],
     },
     {
       preset: "ts-jest",
-      displayName: "appfit-node-sdk",
-      testMatch: ['<rootDir>/packages/appfit-node-sdk/**/*.spec.ts'],
+      displayName: "node",
+      testMatch: ['<rootDir>/packages/node/**/*.spec.ts'],
     },
     {
       preset: "ts-jest",
-      displayName: "appfit-shared",
-      testMatch: ['<rootDir>/packages/appfit-shared/**/*.spec.ts'],
+      displayName: "shared",
+      testMatch: ['<rootDir>/packages/shared/**/*.spec.ts'],
     },
   ],
   testRegex: ".*\\.spec\\.ts$",

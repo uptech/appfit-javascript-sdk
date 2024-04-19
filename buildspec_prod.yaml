@@ -6,7 +6,7 @@ phases:
   install:
     commands:
       - echo Setting PACKAGE_VERSION to $PACKAGE_VERSION
-      - cd packages/appfit-browser-sdk/
+      - cd packages/cdn/
       - PACKAGE_VERSION=$(npm run display-version --silent)
       - cd ../..
       - echo Setting NPM token
@@ -28,12 +28,12 @@ phases:
   post_build:
     commands:
       - echo Replacing current SDK in S3
-      - aws s3 cp packages/appfit-browser-sdk/dist/browser/appfit.js s3://appfit-prod-cdn-storage/browser-sdk/appfit.js
-      - aws s3 cp packages/appfit-browser-sdk/dist/legacy-browser/appfit-legacy.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-legacy.js
+      - aws s3 cp packages/cdn/dist/browser/appfit.js s3://appfit-prod-cdn-storage/browser-sdk/appfit.js
+      - aws s3 cp packages/cdn/dist/legacy-browser/appfit-legacy.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-legacy.js
 
       - echo Archiving build in S3
-      - aws s3 cp packages/appfit-browser-sdk/dist/browser/appfit.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-v$PACKAGE_VERSION.js
-      - aws s3 cp packages/appfit-browser-sdk/dist/legacy-browser/appfit-legacy.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-legacy-v$PACKAGE_VERSION.js
+      - aws s3 cp packages/cdn/dist/browser/appfit.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-v$PACKAGE_VERSION.js
+      - aws s3 cp packages/cdn/dist/legacy-browser/appfit-legacy.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-legacy-v$PACKAGE_VERSION.js
 
       - echo Publishing to NPM
       - npm run deploy:publish
