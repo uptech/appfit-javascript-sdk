@@ -24,8 +24,6 @@
     "lint:dry": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "package": "npm run build && npm pack",
     "prettier": "npx prettier . --write",
-    "test": "jest --no-cache --runInBand",
-    "test:cov": "jest --coverage --no-cache --runInBand",
     "watch": "npx parcel watch",
     "display-version": "echo $npm_package_version"
   },

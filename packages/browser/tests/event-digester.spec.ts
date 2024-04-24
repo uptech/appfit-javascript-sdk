@@ -1,6 +1,6 @@
 import { UserCache } from '../src/events/user-cache';
 import { EventCache } from '../src/events/event-cache';
-import { EventDigester, IApiClient } from '@uptechworks/shared';
+import { EventDigester, IApiClient } from '@uptechworks/appfit-shared';
 
 const mockApiClient: jest.Mocked<IApiClient> = {
   track: jest.fn(),

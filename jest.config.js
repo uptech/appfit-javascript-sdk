@@ -10,6 +10,11 @@ module.exports = {
   projects: [
     {
       preset: "ts-jest",
+      displayName: "browser",
+      testMatch: ['<rootDir>/packages/browser/**/*.spec.ts'],
+    },
+    {
+      preset: "ts-jest",
       displayName: "cdn",
       testMatch: ['<rootDir>/packages/cdn/**/*.spec.ts'],
     },
