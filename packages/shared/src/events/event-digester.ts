@@ -24,7 +24,13 @@ export class EventDigester implements IEventDigest {
     this.userCache.setAnonymousId();
   }
 
-  /// Creates and then digests an event with the provided [eventName] and [properties]
+  /**
+   * Creates and then digests an event with the provided [eventName] and [properties]
+   *
+   * @param {string} eventName A unique name for an event to track
+   * @param {Record<string, string>} payload An object that can contain additional data to track with event
+   * @returns `Promise<void>`
+   */
   async track(eventName: string, payload: Record<string, string>) {
     const id = this.generateUuid();
     const event = createAppFitEvent(id, eventName, payload);
