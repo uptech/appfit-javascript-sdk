@@ -12,8 +12,8 @@
     "prettier": "npx prettier . --write",
     "deploy:publish": "npx lerna publish from-package --yes",
     "deploy:version": "npx lerna version",
-    "test": "jest --no-cache --runInBand",
-    "test:cov": "jest --coverage --no-cache --runInBand",
+    "test": "jest --no-cache",
+    "test:cov": "jest --coverage --no-cache",
     "display-version": "echo $npm_package_version"
   },
   "author": "UpTech Works, LLC",
