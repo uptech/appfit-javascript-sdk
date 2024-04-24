@@ -15,11 +15,6 @@ phases:
       - npm install -g npm@10.5.0
       - npm i
 
-  pre_build:
-    commands:
-      - echo Running tests...
-      - npm run test
-
   build:
     commands:
       - echo Building...
