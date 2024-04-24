@@ -1,7 +1,7 @@
 version: 0.2
 env:
   secrets-manager:
-    NPM_TOKEN: arn:aws:secretsmanager:us-west-2:205830496597:secret:dev/npmjs/token-rEDLLX
+    NPM_TOKEN: arn:aws:secretsmanager:us-west-2:779521627844:secret:prod/npmjs/token-rEDLLX
 phases:
   install:
     commands:
