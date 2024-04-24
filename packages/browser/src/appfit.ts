@@ -1,4 +1,3 @@
-import { AppFitBrowserConfiguration } from './models/app-fit-browser-configuration';
 import {
   AppFitApiClient,
   AppFitEvent,
@@ -7,6 +6,7 @@ import {
 } from '@uptechworks/appfit-shared';
 import { EventCache } from './events/event-cache';
 import { UserCache } from './events/user-cache';
+import { AppFitBrowserConfiguration } from './models/app-fit-browser-configuration';
 
 export class AppFit {
   private readonly configuration: AppFitBrowserConfiguration;
@@ -19,6 +19,11 @@ export class AppFit {
       new EventCache(),
       new UserCache(),
     );
+
+    // This is a unique event that is used specifically to track when the
+    // AppFit SDK has been initialized.
+    // This is an internal event.
+    this.trackEvent('appfit_sdk_initialized', {});
   }
 
   /// Tracks an event with the provided [eventName] and [properties].
@@ -42,5 +47,10 @@ export class AppFit {
   /// resulting in the user being anonymous.
   identifyUser(userId?: string) {
     this.eventDigestor.identify(userId);
+
+    // This is a unique event that is used specifically to track when the
+    // AppFit SDK has been identified a user
+    // This is an internal event.
+    this.trackEvent('appfit_user_identified', {});
   }
 }
