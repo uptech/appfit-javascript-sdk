@@ -28,5 +28,6 @@
     "display-version": "echo $npm_package_version"
   },
   "author": "UpTech Works, LLC",
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "f8f1fb0aa0a33adb28e87b7863502fe37c504b0a"
 }
