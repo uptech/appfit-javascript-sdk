@@ -28,5 +28,5 @@ phases:
       - aws s3 cp packages/cdn/dist/browser/appfit.js s3://appfit-dev-cdn-storage/appfit.js
       - aws s3 cp packages/cdn/dist/legacy-browser/appfit-legacy.js s3://appfit-dev-cdn-storage/appfit-legacy.js
 
-      - aws s3 cp packages/cdn/dist/browser/appfit.js s3://appfit-dev-cdn-storage/appfit.js
-      - aws s3 cp packages/cdn/dist/legacy-browser/appfit-legacy.js s3://appfit-dev-cdn-storage/appfit-legacy.js
+      - aws s3 cp packages/cdn/dist/browser/appfit.js s3://appfit-dev-cdn-storage/appfit-v$PACKAGE_VERSION.js
+      - aws s3 cp packages/cdn/dist/legacy-browser/appfit-legacy.js s3://appfit-dev-cdn-storage/appfit-legacy-v$PACKAGE_VERSION.js
