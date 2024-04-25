@@ -3,33 +3,33 @@
     cache: {},
     trackEvent(eventName, payload) {
       if (!window.AppFit.cache) {
-        window.AppFit.cache = {}
+        window.AppFit.cache = {};
       }
       if (!window.AppFit.cache.events) {
         window.AppFit.cache.events = [];
       }
-      window.AppFit.cache.events.push({ eventName: eventName, payload: payload })
+      window.AppFit.cache.events.push({ eventName: eventName, payload: payload });
 
       return Promise.resolve();
     },
     identifyUser(userId) {
       if (!window.AppFit.cache) {
-        window.AppFit.cache = {}
+        window.AppFit.cache = {};
       }
       window.AppFit.cache.identity = userId;
-    }
+    },
   };
   window.startAppFit = (apiKey) => {
     window.AppFit.apiKey = apiKey;
     var script = document.createElement('script');
     script.type = 'module';
-    script.src = 'https://d1433kipn7zjh1.cloudfront.net/appfit.js';
+    script.src = 'https://d1433kipn7zjh1.cloudfront.net/browser-sdk/appfit.js';
     var fallbackScript = document.createElement('script');
     fallbackScript.noModule = true;
-    fallbackScript.src = 'https://d1433kipn7zjh1.cloudfront.net/appfit-legacy.js';
+    fallbackScript.src = 'https://d1433kipn7zjh1.cloudfront.net/browser-sdk/appfit-legacy.js';
     var first = document.getElementsByTagName('script')[0];
     first.parentNode.insertBefore(script, first);
     first.parentNode.insertBefore(fallbackScript, first);
-  }
+  };
   window.startAppFit('YOUR_WRITE_KEY');
 </script>
