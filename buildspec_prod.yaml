@@ -23,7 +23,7 @@ phases:
   post_build:
     commands:
       - echo Replacing current SDK in S3
-      - aws s3 cp packages/cdn/dist/browser/appfit.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-v1.js
+      - aws s3 cp packages/cdn/dist/browser/appfit.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-v1-browser.js
       - aws s3 cp packages/cdn/dist/legacy-browser/appfit-legacy.js s3://appfit-prod-cdn-storage/browser-sdk/appfit-v1-legacy.js
 
       - echo Archiving build in S3
