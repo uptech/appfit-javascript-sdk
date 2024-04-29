@@ -12,7 +12,10 @@ export class AppFit {
   private readonly configuration: AppFitBrowserConfiguration;
   private readonly eventDigestor: IEventDigest;
 
-  constructor(configuration: AppFitBrowserConfiguration, origin?: string) {
+  constructor(
+    configuration: AppFitBrowserConfiguration,
+    origin: string = 'web',
+  ) {
     this.configuration = configuration;
     this.eventDigestor = new EventDigester(
       new AppFitApiClient(configuration.apiKey),
