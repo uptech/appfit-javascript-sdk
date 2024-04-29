@@ -1,13 +1,16 @@
-import { UserCache } from '../src/events/user-cache';
-import { EventCache } from '../src/events/event-cache';
+import { BrowserUserCache } from '../../shared/src/users/browser-user-cache';
+import { InMemoryEventCache } from '../../shared/src/events/in-memory-event-cache';
 import { EventDigester, IApiClient } from '@uptechworks/appfit-shared';
 
 const mockApiClient: jest.Mocked<IApiClient> = {
   track: jest.fn(),
   trackBatch: jest.fn(),
 };
-const eventCache = new EventCache();
-const userCache = new UserCache(() => 'mock-anonymous-user-uuid-abc', false);
+const eventCache = new InMemoryEventCache();
+const userCache = new BrowserUserCache(
+  () => 'mock-anonymous-user-uuid-abc',
+  false,
+);
 const eventUUIDGenerator = jest.fn().mockReturnValue('mock-event-uuid-abc-def');
 const testDigester = new EventDigester(
   mockApiClient,

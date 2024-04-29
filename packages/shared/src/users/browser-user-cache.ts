@@ -1,12 +1,12 @@
-import { generateNewUuid, IUserCache, UUID } from '@uptechworks/appfit-shared';
+import { IUserCache } from '../events/models/user-cache.interface';
+import { generateNewUuid, UUID } from '../utils/uuid';
 
 enum UserCacheKey {
   USER_ID = 'APPFIT_userId',
   ANONYMOUS = 'APPFIT_anonymousId',
 }
 
-/** @internal */
-export class UserCache implements IUserCache {
+export class BrowserUserCache implements IUserCache {
   private readonly backupCache = new Map<string, string | null>();
 
   constructor(

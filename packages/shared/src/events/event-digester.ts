@@ -15,13 +15,25 @@ export interface IEventDigest {
 
 /** @internal */
 export class EventDigester implements IEventDigest {
+  private systemProperties: Record<string, string> = {};
+
   constructor(
     private readonly apiClient: IApiClient,
     private readonly eventCache: IEventCache,
     private readonly userCache: IUserCache,
+    origin?: string,
     private readonly generateUuid: () => UUID = generateNewUuid,
   ) {
     this.userCache.setAnonymousId();
+
+    if (origin) {
+      this.systemProperties['origin'] = origin;
+    }
+
+    // This is a unique event that is used specifically to track when the
+    // AppFit SDK has been initialized.
+    // This is an internal event.
+    this.track('appfit_sdk_initialized', {});
   }
 
   /**
@@ -48,6 +60,7 @@ export class EventDigester implements IEventDigest {
       event,
       this.userCache.getUserId(),
       this.userCache.getAnonymousId(),
+      this.systemProperties,
     );
 
     const trackResult = await this.apiClient.track(eventDto);
@@ -76,6 +89,7 @@ export class EventDigester implements IEventDigest {
         event,
         this.userCache.getUserId(),
         this.userCache.getAnonymousId(),
+        this.systemProperties,
       ),
     );
 
@@ -89,6 +103,11 @@ export class EventDigester implements IEventDigest {
   /// resulting in the user being anonymous.
   identify(userId?: string) {
     this.userCache.setUserId(userId);
+
+    // This is a unique event that is used specifically to track when the
+    // AppFit SDK has been identified a user
+    // This is an internal event.
+    this.track('appfit_user_identified', {});
   }
 
   /// Digests the cache.

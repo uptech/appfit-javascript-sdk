@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Test Website</title>
-  <script>
-    window.AppFit={cache:{},trackEvent:(e,t)=>(window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.events||(window.AppFit.cache.events=[]),window.AppFit.cache.events.push({eventName:e,payload:t}),Promise.resolve()),identifyUser(e){window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.identity=e}},window.startAppFit=e=>{window.AppFit.apiKey=e;var t=document.createElement("script");t.type="module",t.src="../dist/browser/appfit.js";var p=document.createElement("script");p.noModule=!0,p.src="../dist/legacy-browser/appfit-legacy.js";var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(t,i),i.parentNode.insertBefore(p,i)},
+  <script type="text/javascript">
+    window.AppFit={cache:{},origin:"web",trackEvent:(e,t)=>(window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.events||(window.AppFit.cache.events=[]),window.AppFit.cache.events.push({eventName:e,payload:t}),Promise.resolve()),identifyUser(e){window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.identity=e}},window.startAppFit=e=>{window.AppFit.apiKey=e;var t=document.createElement("script");t.type="module",t.src="../dist/browser/appfit.js";var i=document.createElement("script");i.noModule=!0,i.src="../dist/legacy-browser/appfit-legacy.js";var p=document.getElementsByTagName("script")[0];p.parentNode.insertBefore(t,p),p.parentNode.insertBefore(i,p)},
 
-    window.startAppFit("YOUR_WRITE_KEY");
-  </script>
+    window.startAppFit("YOUR_WRITE_KEY");</script>
   <script>
     console.log('track', window.AppFit);
     window.AppFit.trackEvent('screen_viewed', { screen: 'test-screen' });

@@ -1,11 +1,10 @@
-import {
-  AppFit,
-  AppFitBrowserConfiguration,
-} from '@uptechworks/appfit-browser-sdk';
+import { AppFitBrowserConfiguration } from '@uptechworks/appfit-browser-sdk';
+import { AppFit } from './appfit';
 
 interface GlobalAppFit {
   apiKey?: string;
   client?: AppFit;
+  origin?: string;
   cache?: {
     events?: { eventName: string; payload: Record<string, string> }[];
     identity?: string;
@@ -20,14 +19,14 @@ declare global {
   }
 }
 
-async function appfitInstall(apiKey?: string) {
+(async function appfitInstall(apiKey?: string) {
   if (!apiKey) {
     console.error('No API key provided');
     return;
   }
 
   const config = new AppFitBrowserConfiguration(apiKey);
-  const client = new AppFit(config);
+  const client = new AppFit(config, window.AppFit.origin);
   window.AppFit.client = client;
   window.AppFit.trackEvent = client.trackEvent.bind(client);
   window.AppFit.identifyUser = client.identifyUser.bind(client);
@@ -41,9 +40,7 @@ async function appfitInstall(apiKey?: string) {
     });
   }
   window.AppFit.cache = undefined;
-}
-
-appfitInstall(window.AppFit?.apiKey).catch((reason: any) => {
+})(window.AppFit?.apiKey).catch((reason: unknown) => {
   console.error('Failed to initialize AppFit');
   console.error(reason);
 });

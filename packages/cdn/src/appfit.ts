@@ -6,18 +6,19 @@ import {
   IEventDigest,
   InMemoryEventCache,
 } from '@uptechworks/appfit-shared';
-import { AppFitBrowserConfiguration } from './models/app-fit-browser-configuration';
+import { AppFitBrowserConfiguration } from '@uptechworks/appfit-browser-sdk';
 
 export class AppFit {
   private readonly configuration: AppFitBrowserConfiguration;
   private readonly eventDigestor: IEventDigest;
 
-  constructor(configuration: AppFitBrowserConfiguration) {
+  constructor(configuration: AppFitBrowserConfiguration, origin?: string) {
     this.configuration = configuration;
     this.eventDigestor = new EventDigester(
       new AppFitApiClient(configuration.apiKey),
       new InMemoryEventCache(),
       new BrowserUserCache(),
+      origin,
     );
   }
 

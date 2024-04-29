@@ -1,10 +1,9 @@
-import { AppFitEvent, IEventCache } from '@uptechworks/appfit-shared';
-
-// EventCache is used as a backup for events that failed when sending
 // a network request. We can re-try these events when internet access
 // is restored.
-/** @internal */
-export class EventCache implements IEventCache {
+import { IEventCache } from './models/event-cache.interface';
+import { AppFitEvent } from './models/appfit-event';
+
+export class InMemoryEventCache implements IEventCache {
   private cache: Map<string, AppFitEvent> = new Map<string, AppFitEvent>();
 
   /// An array of all cached events

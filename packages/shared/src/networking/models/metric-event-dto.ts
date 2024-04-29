@@ -22,6 +22,7 @@ export function appfitEventToMetricEventDto(
   appfitEvent: AppFitEvent,
   userId?: string,
   anonymousId?: string,
+  systemProperties?: Record<string, string>,
 ): MetricEventDto {
   return {
     occurredAt: appfitEvent.occurredAt,
@@ -31,7 +32,7 @@ export function appfitEventToMetricEventDto(
       userId,
       anonymousId,
       properties: appfitEvent.properties,
-      // systemProperties,
+      systemProperties,
     },
     eventSource: 'appfit',
   };
