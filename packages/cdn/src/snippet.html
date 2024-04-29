@@ -24,10 +24,10 @@
     window.AppFit.apiKey = apiKey;
     var script = document.createElement('script');
     script.type = 'module';
-    script.src = 'https://d1433kipn7zjh1.cloudfront.net/browser-sdk/appfit.js';
+    script.src = 'https://d1433kipn7zjh1.cloudfront.net/browser-sdk/appfit-v1.js';
     var fallbackScript = document.createElement('script');
     fallbackScript.noModule = true;
-    fallbackScript.src = 'https://d1433kipn7zjh1.cloudfront.net/browser-sdk/appfit-legacy.js';
+    fallbackScript.src = 'https://d1433kipn7zjh1.cloudfront.net/browser-sdk/appfit-v1-legacy.js';
     var first = document.getElementsByTagName('script')[0];
     first.parentNode.insertBefore(script, first);
     first.parentNode.insertBefore(fallbackScript, first);
