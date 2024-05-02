@@ -20,8 +20,8 @@ module.exports = {
     },
     {
       preset: "ts-jest",
-      displayName: "node",
-      testMatch: ['<rootDir>/packages/node/**/*.spec.ts'],
+      displayName: "server",
+      testMatch: ['<rootDir>/packages/server/**/*.spec.ts'],
     },
     {
       preset: "ts-jest",

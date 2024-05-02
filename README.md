@@ -5,7 +5,7 @@ A monorepo for the AppFit Javascript SDKs.
 Included packages:
 * **Browser** - NPM-hosted library for use with web apps
 * **CDN** - a cdn-hosted bundle of the SDK. It wraps the browser library.
-* **Node** - a server-based version of the SDK
+* **Server** - a server-based version of the SDK
 * **Shared** - NPM-hosted library shared by other packages
 
 ## Setup
