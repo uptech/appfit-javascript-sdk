@@ -14,7 +14,18 @@ Included packages:
     ```shell
     npm i
     ```
-    **NOTE:** This is a mono repo, so there is only one `node_modules` for all projects.
+    **NOTE:** This is a mono repo (it uses workspaces), so there is only one `node_modules` for all projects.
+
+## Using Workspaces
+This monorepo uses NPM's workspaces functionality (see [documentation](https://docs.npmjs.com/cli/v8/using-npm/workspaces)).
+
+You may reference an individual workspace with `npm` by appending the option `-w [workspace name]` to a command,
+where `[workspace name]` is the `name` property in the workspace's `package.json` file.
+
+For example, to install a package (e.g. `luxon`) to the server workspace, use:
+```shell
+npm i luxon -w @uptechworks/appfit-server-sdk
+```
 
 ## Building
 1. Build all the packages:
@@ -27,7 +38,7 @@ Included packages:
    ```shell
    npm run deploy:version
    ```
-   Use the prompts to bump each package.
+   Use the prompts to bump each package. It will ask for every package where it detects a change.
 1. Push to `prod` branch to publish to NPM and update the CDN.
 1. Update snippet in docs, if it was changed. (See section below)
 

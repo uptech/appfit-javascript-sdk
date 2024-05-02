@@ -10,7 +10,11 @@ import { AppFitEvent } from '../dist/types';
 
 /** @internal */
 export interface IAppFitCore {
-  track(eventName: string, payload: Record<string, string>): Promise<void>;
+  track(
+    eventName: string,
+    payload: Record<string, string>,
+    userData?: EventUserIdentifier,
+  ): Promise<void>;
   trackAppFitEvent(
     appFitEvent: AppFitEvent,
     userData?: EventUserIdentifier,
