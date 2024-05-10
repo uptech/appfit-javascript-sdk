@@ -1,4 +1,4 @@
-import { AppFitEvent } from '../../events/models/appfit-event';
+import { AnalyticEvent } from '../../events/models/analytic-event';
 
 /** @internal */
 interface MetricEventDtoPayload {
@@ -18,21 +18,18 @@ export interface MetricEventDto {
 }
 
 /** @internal */
-export function appfitEventToMetricEventDto(
-  appfitEvent: AppFitEvent,
-  userId?: string,
-  anonymousId?: string,
-  systemProperties?: Record<string, string>,
+export function analyticEventToMetricEventDto(
+  event: AnalyticEvent,
 ): MetricEventDto {
   return {
-    occurredAt: appfitEvent.occurredAt,
+    occurredAt: event.occurredAt,
     payload: {
-      eventId: appfitEvent.id,
-      name: appfitEvent.name,
-      userId,
-      anonymousId,
-      properties: appfitEvent.properties,
-      systemProperties,
+      eventId: event.id,
+      name: event.name,
+      userId: event.userId,
+      anonymousId: event.anonymousId,
+      properties: event.properties,
+      systemProperties: event.systemProperties,
     },
     eventSource: 'appfit',
   };

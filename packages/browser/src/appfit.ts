@@ -1,38 +1,41 @@
 import {
   AppFitApiClient,
+  AppFitCore,
   AppFitEvent,
   BrowserUserCache,
   EventDigester,
-  IEventDigest,
+  IAppFitCore,
   InMemoryEventCache,
 } from '@uptechworks/appfit-shared';
 import { AppFitBrowserConfiguration } from './models/app-fit-browser-configuration';
 
 export class AppFit {
   private readonly configuration: AppFitBrowserConfiguration;
-  private readonly eventDigestor: IEventDigest;
+  private readonly appFitCore: IAppFitCore;
 
   constructor(configuration: AppFitBrowserConfiguration) {
     this.configuration = configuration;
-    this.eventDigestor = new EventDigester(
+
+    const eventDigester = new EventDigester(
       new AppFitApiClient(configuration.apiKey),
       new InMemoryEventCache(),
-      new BrowserUserCache(),
     );
+
+    this.appFitCore = new AppFitCore(eventDigester, new BrowserUserCache());
   }
 
   /// Tracks an event with the provided [eventName] and [properties].
   ///
   /// This is used to track events in the AppFit dashboard.
   async trackEvent(eventName: string, payload: Record<string, string>) {
-    return this.eventDigestor.track(eventName, payload);
+    return this.appFitCore.track(eventName, payload);
   }
 
   /// Tracks an event with the provided [event].
   ///
   /// This is used to track events in the AppFit dashboard.
   async track(event: AppFitEvent) {
-    return this.eventDigestor.digest(event);
+    return this.appFitCore.trackAppFitEvent(event);
   }
 
   /// Identifies the user with the provided [userId].
@@ -41,6 +44,6 @@ export class AppFit {
   /// If the [userId] is `undefined`, the user will be un-identified,
   /// resulting in the user being anonymous.
   async identifyUser(userId?: string) {
-    this.eventDigestor.identify(userId);
+    this.appFitCore.identify(userId);
   }
 }

@@ -1,11 +1,11 @@
-import { AppFitEvent } from './appfit-event';
+import { AnalyticEvent } from './analytic-event';
 
 /** @internal */
 export interface IEventCache {
-  entries: AppFitEvent[];
+  entries: AnalyticEvent[];
 
-  add(event: AppFitEvent): void;
+  add(event: AnalyticEvent): void;
   removeById(eventId: string): void;
-  remove(event: AppFitEvent): void;
+  remove(event: AnalyticEvent): void;
   clear(): void;
 }

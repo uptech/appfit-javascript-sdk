@@ -1,6 +1,11 @@
-import { BrowserUserCache } from '../../shared/src/users/browser-user-cache';
-import { InMemoryEventCache } from '../../shared/src/events/in-memory-event-cache';
-import { EventDigester, IApiClient } from '@uptechworks/appfit-shared';
+import {
+  AppFitCore,
+  AppFitEvent,
+  BrowserUserCache,
+  EventDigester,
+  IApiClient,
+  InMemoryEventCache,
+} from '../src';
 
 const mockApiClient: jest.Mocked<IApiClient> = {
   track: jest.fn(),
@@ -12,14 +17,15 @@ const userCache = new BrowserUserCache(
   false,
 );
 const eventUUIDGenerator = jest.fn().mockReturnValue('mock-event-uuid-abc-def');
-const testDigester = new EventDigester(
-  mockApiClient,
-  eventCache,
+const testDigester = new EventDigester(mockApiClient, eventCache);
+const appFitCore = new AppFitCore(
+  testDigester,
   userCache,
+  'web',
   eventUUIDGenerator,
 );
 
-describe('EventDigester', () => {
+describe('AppFitCore', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     userCache.setUserId(); // clear user id
@@ -30,7 +36,7 @@ describe('EventDigester', () => {
     it('should call api client track with anonymous id', async () => {
       mockApiClient.track.mockResolvedValueOnce(true);
 
-      await testDigester.track('fakeEvent', { myProperty: 'myValue' });
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
 
       expect(mockApiClient.track).toHaveBeenCalledTimes(1);
       expect(mockApiClient.track.mock.calls[0][0]).toMatchObject({
@@ -50,11 +56,23 @@ describe('EventDigester', () => {
     it('should call api client track with user id after identification', async () => {
       mockApiClient.track.mockResolvedValueOnce(true);
 
-      testDigester.identify('fake-user-id');
-      await testDigester.track('fakeEvent', { myProperty: 'myValue' });
+      appFitCore.identify('fake-user-id');
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
 
-      expect(mockApiClient.track).toHaveBeenCalledTimes(1);
+      // expect internal identification call
+      // and event call
+      expect(mockApiClient.track).toHaveBeenCalledTimes(2);
       expect(mockApiClient.track.mock.calls[0][0]).toMatchObject({
+        payload: {
+          anonymousId: 'mock-anonymous-user-uuid-abc',
+          userId: 'fake-user-id',
+          eventId: 'mock-event-uuid-abc-def',
+          name: 'appfit_user_identified',
+          properties: {},
+        },
+        eventSource: 'appfit',
+      });
+      expect(mockApiClient.track.mock.calls[1][0]).toMatchObject({
         payload: {
           anonymousId: 'mock-anonymous-user-uuid-abc',
           userId: 'fake-user-id',
@@ -68,10 +86,35 @@ describe('EventDigester', () => {
       });
     });
 
+    it('should track AppFitEvents', async () => {
+      mockApiClient.track.mockResolvedValueOnce(true);
+
+      const fakeEvent: AppFitEvent = {
+        id: 'pre-made-event-id',
+        name: 'pre-made-fakeEvent',
+        properties: { myProperty: 'myValue' },
+      };
+      await appFitCore.trackAppFitEvent(fakeEvent);
+
+      expect(mockApiClient.track).toHaveBeenCalledTimes(1);
+      expect(mockApiClient.track.mock.calls[0][0]).toMatchObject({
+        payload: {
+          anonymousId: 'mock-anonymous-user-uuid-abc',
+          userId: undefined,
+          eventId: 'pre-made-event-id',
+          name: 'pre-made-fakeEvent',
+          properties: {
+            myProperty: 'myValue',
+          },
+        },
+        eventSource: 'appfit',
+      });
+    });
+
     it('should NOT cache the event', async () => {
       mockApiClient.track.mockResolvedValueOnce(true);
 
-      await testDigester.track('fakeEvent', { myProperty: 'myValue' });
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
 
       expect(eventCache.entries.length).toBe(0);
     });
@@ -79,7 +122,7 @@ describe('EventDigester', () => {
     it('should NOT cache a user ID without identification', async () => {
       mockApiClient.track.mockResolvedValueOnce(true);
 
-      await testDigester.track('fakeEvent', { myProperty: 'myValue' });
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
 
       expect(userCache.getUserId()).toBe(undefined);
     });
@@ -87,8 +130,8 @@ describe('EventDigester', () => {
     it('should cache a user ID after identification', async () => {
       mockApiClient.track.mockReturnValueOnce(Promise.resolve(true));
 
-      testDigester.identify('fake-user-id');
-      await testDigester.track('fakeEvent', { myProperty: 'myValue' });
+      appFitCore.identify('fake-user-id');
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
 
       expect(userCache.getUserId()).toBe('fake-user-id');
     });
@@ -98,7 +141,7 @@ describe('EventDigester', () => {
     it('should cache a failed call', async () => {
       mockApiClient.track.mockResolvedValueOnce(false);
 
-      await testDigester.track('fakeEvent', { myProperty: 'myValue' });
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
 
       expect(eventCache.entries.length).toBe(1);
       expect(eventCache.entries[0].id).toBe('mock-event-uuid-abc-def');
@@ -106,14 +149,14 @@ describe('EventDigester', () => {
 
     it('should batch digest after successful event tracking', async () => {
       mockApiClient.track.mockResolvedValueOnce(false);
-      await testDigester.track('fakeEvent', { myProperty: 'myValue' });
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
 
       expect(eventCache.entries.length).toBe(1);
 
       mockApiClient.track.mockResolvedValueOnce(true);
       mockApiClient.trackBatch.mockResolvedValueOnce(true);
       eventUUIDGenerator.mockReturnValueOnce('mock-event-uuid-abc-def2');
-      await testDigester.track('fakeEvent2', { myProperty: 'myValue2' });
+      await appFitCore.track('fakeEvent2', { myProperty: 'myValue2' });
 
       const mockBatchPayload = mockApiClient.trackBatch.mock.calls[0][0];
       expect(eventCache.entries.length).toBe(0);
@@ -135,14 +178,14 @@ describe('EventDigester', () => {
 
     it('should not clear event cache if batch digest fails', async () => {
       mockApiClient.track.mockResolvedValueOnce(false);
-      await testDigester.track('fakeEvent', { myProperty: 'myValue' });
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
 
       expect(eventCache.entries.length).toBe(1);
 
       mockApiClient.track.mockResolvedValueOnce(true);
       mockApiClient.trackBatch.mockResolvedValueOnce(false);
       eventUUIDGenerator.mockReturnValueOnce('mock-event-uuid-abc-def2');
-      await testDigester.track('fakeEvent2', { myProperty: 'myValue2' });
+      await appFitCore.track('fakeEvent2', { myProperty: 'myValue2' });
 
       expect(eventCache.entries.length).toBe(1);
       expect(mockApiClient.trackBatch).toHaveBeenCalledTimes(1);

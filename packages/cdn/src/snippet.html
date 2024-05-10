@@ -1,7 +1,5 @@
 <script type="text/javascript">
   window.AppFit = {
-    cache: {},
-    origin: 'web',
     trackEvent(eventName, payload) {
       if (!window.AppFit.cache) {
         window.AppFit.cache = {};
@@ -19,6 +17,8 @@
       }
       window.AppFit.cache.identity = userId;
     },
+    cache: {},
+    origin: 'web',
   };
   window.startAppFit = (apiKey) => {
     window.AppFit.apiKey = apiKey;

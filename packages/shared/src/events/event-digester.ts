@@ -1,67 +1,27 @@
-import { AppFitEvent, createAppFitEvent } from './models/appfit-event';
-import { appfitEventToMetricEventDto } from '../networking/models/metric-event-dto';
 import { IApiClient } from '../networking/api-client';
-import { generateNewUuid, UUID } from '../utils/uuid';
 import { IEventCache } from './models/event-cache.interface';
-import { IUserCache } from './models/user-cache.interface';
+import { AnalyticEvent } from './models/analytic-event';
+import { analyticEventToMetricEventDto } from '../networking/models/metric-event-dto';
 
 /** @internal */
 export interface IEventDigest {
-  track(eventName: string, payload: Record<string, string>): Promise<void>;
-  digest(event: AppFitEvent): Promise<void>;
-  batchDigest(events: AppFitEvent[]): Promise<boolean>;
-  identify(userId?: string): void;
+  digest(event: AnalyticEvent): Promise<void>;
+  batchDigest(events: AnalyticEvent[]): Promise<boolean>;
 }
 
 /** @internal */
 export class EventDigester implements IEventDigest {
-  private systemProperties: Record<string, string> = {};
-
   constructor(
     private readonly apiClient: IApiClient,
     private readonly eventCache: IEventCache,
-    private readonly userCache: IUserCache,
-    origin?: string,
-    private readonly generateUuid: () => UUID = generateNewUuid,
-  ) {
-    this.userCache.setAnonymousId();
-
-    if (origin) {
-      this.systemProperties['origin'] = origin;
-    }
-
-    // This is a unique event that is used specifically to track when the
-    // AppFit SDK has been initialized.
-    // This is an internal event.
-    this.track('appfit_sdk_initialized', {});
-  }
-
-  /**
-   * Creates and then digests an event with the provided [eventName] and [properties]
-   *
-   * @param {string} eventName A unique name for an event to track
-   * @param {Record<string, string>} payload An object that can contain additional data to track with event
-   * @returns `Promise<void>`
-   */
-  async track(eventName: string, payload: Record<string, string>) {
-    const id = this.generateUuid();
-    const event = createAppFitEvent(id, eventName, payload);
-    return this.digest(event);
-  }
+  ) {}
 
   /// Digests the provided [event].
   ///
   /// This is used to digest the provided [event] and send it to the AppFit dashboard.
-  /// Before any event is sent to the AppFit dashboard, it is first added to the cache.
-  /// If the event is successfully sent to the AppFit dashboard, it is removed from the cache,
-  /// otherwise it will be retried later.
-  async digest(event: AppFitEvent) {
-    const eventDto = appfitEventToMetricEventDto(
-      event,
-      this.userCache.getUserId(),
-      this.userCache.getAnonymousId(),
-      this.systemProperties,
-    );
+  /// If the event is not successful, it is cached and it will be retried later.
+  async digest(event: AnalyticEvent) {
+    const eventDto = analyticEventToMetricEventDto(event);
 
     const trackResult = await this.apiClient.track(eventDto);
     if (!trackResult) {
@@ -83,31 +43,12 @@ export class EventDigester implements IEventDigest {
   /// This is used to digest the provided [events] and send it to the AppFit dashboard.
   /// Before any event is sent to the AppFit dashboard, it is first added to the cache.
   /// This DOES NOT CACHE failed events
-  async batchDigest(events: AppFitEvent[]): Promise<boolean> {
+  async batchDigest(events: AnalyticEvent[]): Promise<boolean> {
     const eventDtos = events.map((event) =>
-      appfitEventToMetricEventDto(
-        event,
-        this.userCache.getUserId(),
-        this.userCache.getAnonymousId(),
-        this.systemProperties,
-      ),
+      analyticEventToMetricEventDto(event),
     );
 
     return this.apiClient.trackBatch(eventDtos);
-  }
-
-  /// Identifies the user with the provided [userId].
-  ///
-  /// This is used to identify the user in the AppFit dashboard.
-  /// When passing in `undefined`, the user will be un-identified,
-  /// resulting in the user being anonymous.
-  identify(userId?: string) {
-    this.userCache.setUserId(userId);
-
-    // This is a unique event that is used specifically to track when the
-    // AppFit SDK has been identified a user
-    // This is an internal event.
-    this.track('appfit_user_identified', {});
   }
 
   /// Digests the cache.
