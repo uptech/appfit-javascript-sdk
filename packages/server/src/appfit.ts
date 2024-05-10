@@ -8,6 +8,7 @@ import {
   InMemoryEventCache,
 } from '@uptechworks/appfit-shared';
 import { AppFitServerConfiguration } from './models/app-fit-server-configuration';
+import { randomUUID } from 'node:crypto';
 
 export class AppFit {
   private readonly configuration: AppFitServerConfiguration;
@@ -20,7 +21,9 @@ export class AppFit {
       new InMemoryEventCache(),
     );
 
-    this.appFitCore = new AppFitCore(eventDigester);
+    this.appFitCore = new AppFitCore(eventDigester, undefined, 'node', () =>
+      randomUUID(),
+    );
   }
 
   /**
