@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Test Website</title>
+  <!-- local -->
   <script type="text/javascript">
     window.AppFit={cache:{},origin:"web",trackEvent:(e,t)=>(window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.events||(window.AppFit.cache.events=[]),window.AppFit.cache.events.push({eventName:e,payload:t}),Promise.resolve()),identifyUser(e){window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.identity=e}},window.startAppFit=e=>{window.AppFit.apiKey=e;var t=document.createElement("script");t.type="module",t.src="../dist/browser/appfit.js";var i=document.createElement("script");i.noModule=!0,i.src="../dist/legacy-browser/appfit-legacy.js";var p=document.getElementsByTagName("script")[0];p.parentNode.insertBefore(t,p),p.parentNode.insertBefore(i,p)},
 
-    window.startAppFit("API_KEY");</script>
+    window.startAppFit("API_KEY");
+  </script>
+
+  <!-- dev cdn -->
+<!--  <script type="text/javascript">window.AppFit={trackEvent:(e,t)=>(window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.events||(window.AppFit.cache.events=[]),window.AppFit.cache.events.push({eventName:e,payload:t}),Promise.resolve()),identifyUser(e){window.AppFit.cache||(window.AppFit.cache={}),window.AppFit.cache.identity=e},cache:{},origin:"web"},window.startAppFit=e=>{window.AppFit.apiKey=e;var t=document.createElement("script");t.type="module",t.src="https://d1433kipn7zjh1.cloudfront.net/browser-sdk/appfit-v1-browser.js";var i=document.createElement("script");i.noModule=!0,i.src="https://d1433kipn7zjh1.cloudfront.net/browser-sdk/appfit-v1-legacy.js";var p=document.getElementsByTagName("script")[0];p.parentNode.insertBefore(t,p),p.parentNode.insertBefore(i,p)},-->
+<!--    window.startAppFit("API_KEY");-->
+<!--  </script>-->
+
   <script>
     console.log('track', window.AppFit);
     window.AppFit.trackEvent('screen_viewed', { screen: 'test-screen' });
@@ -18,6 +26,7 @@
 <body>
 <main>
   <h1>Welcome to My Website</h1>
+  <p>View the network tab/console in dev tools to see any events.</p>
 </main>
 </body>
 </html>
