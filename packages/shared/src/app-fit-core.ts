@@ -6,7 +6,7 @@ import {
   createAnalyticEventFromAppFitEvent,
 } from './events/models/analytic-event';
 import { EventUserIdentifier } from './models/event-user-indentifier';
-import { AppFitEvent } from '../dist/types';
+import { AppFitEvent } from './events/models/appfit-event';
 
 /** @internal */
 export interface IAppFitCore {
