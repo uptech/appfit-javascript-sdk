@@ -23,9 +23,14 @@ export class AppFit {
     this.appFitCore = new AppFitCore(eventDigester);
   }
 
-  /// Tracks an event with the provided [eventName] and [properties].
-  ///
-  /// This is used to track events in the AppFit dashboard.
+  /**
+   * Tracks an event with the provided event name and properties.
+   * This is used to track events in the AppFit dashboard.
+   *
+   * @param {string} eventName A unique name for an event to track
+   * @param {Record<string, string>} payload Extra data to be sent with the event
+   * @param {EventUserIdentifier} user A unique identifier for the user
+   * */
   async trackEvent(
     eventName: string,
     payload: Record<string, string>,
@@ -34,9 +39,13 @@ export class AppFit {
     return this.appFitCore.track(eventName, payload, user);
   }
 
-  /// Tracks an event with the provided [event].
-  ///
-  /// This is used to track events in the AppFit dashboard.
+  /**
+   * Tracks an event with the provided AppFitEvent
+   * This is used to track events in the AppFit dashboard.
+   *
+   * @param {AppFitEvent} event The event with name and properties
+   * @param {EventUserIdentifier} user A unique identifier for the user
+   * */
   async track(event: AppFitEvent, user: EventUserIdentifier) {
     return this.appFitCore.trackAppFitEvent(event, user);
   }
