@@ -15,7 +15,7 @@ export class AppFit {
 
   constructor(
     configuration: AppFitBrowserConfiguration,
-    origin: string = 'web',
+    origin: string = 'website',
   ) {
     this.configuration = configuration;
 

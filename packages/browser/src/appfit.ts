@@ -21,7 +21,11 @@ export class AppFit {
       new InMemoryEventCache(),
     );
 
-    this.appFitCore = new AppFitCore(eventDigester, new BrowserUserCache());
+    this.appFitCore = new AppFitCore(
+      eventDigester,
+      new BrowserUserCache(),
+      'website',
+    );
   }
 
   /**
