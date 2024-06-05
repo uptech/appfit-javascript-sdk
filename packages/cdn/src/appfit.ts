@@ -18,6 +18,7 @@ export class AppFit {
     origin: string = 'website',
   ) {
     this.configuration = configuration;
+    const userAgent = window?.navigator?.userAgent;
 
     const eventDigester = new EventDigester(
       new AppFitApiClient(configuration.apiKey),
@@ -28,6 +29,7 @@ export class AppFit {
       eventDigester,
       new BrowserUserCache(),
       origin,
+      { browser: { userAgent } },
     );
   }
 

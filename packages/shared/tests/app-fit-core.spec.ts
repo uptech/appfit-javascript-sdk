@@ -22,6 +22,7 @@ const appFitCore = new AppFitCore(
   testDigester,
   userCache,
   'web',
+  { browser: { userAgent: 'test-agent' } },
   eventUUIDGenerator,
 );
 
@@ -43,13 +44,16 @@ describe('AppFitCore', () => {
         payload: {
           anonymousId: 'mock-anonymous-user-uuid-abc',
           userId: undefined,
-          eventId: 'mock-event-uuid-abc-def',
-          name: 'fakeEvent',
+          sourceEventId: 'mock-event-uuid-abc-def',
+          eventName: 'fakeEvent',
+          origin: 'web',
           properties: {
             myProperty: 'myValue',
           },
+          systemProperties: { browser: { userAgent: 'test-agent' } },
         },
         eventSource: 'appfit',
+        version: '2',
       });
     });
 
@@ -66,23 +70,29 @@ describe('AppFitCore', () => {
         payload: {
           anonymousId: 'mock-anonymous-user-uuid-abc',
           userId: 'fake-user-id',
-          eventId: 'mock-event-uuid-abc-def',
-          name: 'appfit_user_identified',
+          sourceEventId: 'mock-event-uuid-abc-def',
+          eventName: 'appfit_user_identified',
+          origin: 'web',
           properties: {},
+          systemProperties: { browser: { userAgent: 'test-agent' } },
         },
         eventSource: 'appfit',
+        version: '2',
       });
       expect(mockApiClient.track.mock.calls[1][0]).toMatchObject({
         payload: {
           anonymousId: 'mock-anonymous-user-uuid-abc',
           userId: 'fake-user-id',
-          eventId: 'mock-event-uuid-abc-def',
-          name: 'fakeEvent',
+          sourceEventId: 'mock-event-uuid-abc-def',
+          eventName: 'fakeEvent',
+          origin: 'web',
           properties: {
             myProperty: 'myValue',
           },
+          systemProperties: { browser: { userAgent: 'test-agent' } },
         },
         eventSource: 'appfit',
+        version: '2',
       });
     });
 
@@ -101,13 +111,16 @@ describe('AppFitCore', () => {
         payload: {
           anonymousId: 'mock-anonymous-user-uuid-abc',
           userId: undefined,
-          eventId: 'pre-made-event-id',
-          name: 'pre-made-fakeEvent',
+          sourceEventId: 'pre-made-event-id',
+          eventName: 'pre-made-fakeEvent',
+          origin: 'web',
           properties: {
             myProperty: 'myValue',
           },
+          systemProperties: { browser: { userAgent: 'test-agent' } },
         },
         eventSource: 'appfit',
+        version: '2',
       });
     });
 
@@ -166,13 +179,16 @@ describe('AppFitCore', () => {
         payload: {
           anonymousId: 'mock-anonymous-user-uuid-abc',
           userId: undefined,
-          eventId: 'mock-event-uuid-abc-def',
-          name: 'fakeEvent',
+          sourceEventId: 'mock-event-uuid-abc-def',
+          eventName: 'fakeEvent',
+          origin: 'web',
           properties: {
             myProperty: 'myValue',
           },
+          systemProperties: { browser: { userAgent: 'test-agent' } },
         },
         eventSource: 'appfit',
+        version: '2',
       });
     });
 

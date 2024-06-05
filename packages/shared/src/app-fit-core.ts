@@ -6,7 +6,10 @@ import {
   createAnalyticEventFromAppFitEvent,
 } from './events/models/analytic-event';
 import { EventUserIdentifier } from './models/event-user-indentifier';
-import { AppFitEvent } from './events/models/appfit-event';
+import {
+  AppFitEvent,
+  AppFitEventSystemProperties,
+} from './events/models/appfit-event';
 
 /** @internal */
 export interface IAppFitCore {
@@ -24,12 +27,11 @@ export interface IAppFitCore {
 
 /** @internal */
 export class AppFitCore implements IAppFitCore {
-  private systemProperties: Record<string, string> = {};
-
   constructor(
     private readonly eventDigester: IEventDigest,
     private readonly userCache?: IUserCache,
     private readonly origin?: string,
+    private readonly systemProperties: AppFitEventSystemProperties = {},
     private readonly generateUuid: () => UUID = generateNewUuid,
   ) {
     this.userCache?.setAnonymousId();

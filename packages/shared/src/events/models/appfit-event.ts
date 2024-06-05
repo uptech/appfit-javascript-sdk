@@ -10,6 +10,38 @@ export interface AppFitEvent {
   readonly properties?: Record<string, string>;
 }
 
+/**
+ * Trackable system properties for AppFit events
+ * */
+export interface AppFitEventSystemProperties {
+  appVersion?: string;
+  ipAddress?: string;
+  location?: {
+    city?: string;
+    region?: string;
+    countryCode?: string;
+    postalCode?: string;
+    continent?: string;
+    latitude?: number;
+    longitude?: number;
+  };
+  os?: {
+    name?: string;
+    version?: string;
+  };
+  device?: {
+    id?: string;
+    advertisingId?: string;
+    manufacturer?: string;
+    model?: string;
+  };
+  browser?: {
+    userAgent?: string;
+    name?: string;
+    version?: string;
+  };
+}
+
 /** @internal */
 export function createAppFitEvent(
   id: UUID,
