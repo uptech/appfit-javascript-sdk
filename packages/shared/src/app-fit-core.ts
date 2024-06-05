@@ -29,14 +29,10 @@ export class AppFitCore implements IAppFitCore {
   constructor(
     private readonly eventDigester: IEventDigest,
     private readonly userCache?: IUserCache,
-    origin?: string,
+    private readonly origin?: string,
     private readonly generateUuid: () => UUID = generateNewUuid,
   ) {
     this.userCache?.setAnonymousId();
-
-    if (origin) {
-      this.systemProperties['origin'] = origin;
-    }
 
     // This is a unique event that is used specifically to track when the
     // AppFit SDK has been initialized.
@@ -65,6 +61,7 @@ export class AppFitCore implements IAppFitCore {
     const event = createAnalyticEvent(
       id,
       eventName,
+      this.origin,
       userId,
       anonymousId,
       payload,
@@ -90,6 +87,7 @@ export class AppFitCore implements IAppFitCore {
 
     const event = createAnalyticEventFromAppFitEvent(
       appFitEvent,
+      this.origin,
       userId,
       anonymousId,
       this.systemProperties,
