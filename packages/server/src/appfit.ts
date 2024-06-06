@@ -21,8 +21,12 @@ export class AppFit {
       new InMemoryEventCache(),
     );
 
-    this.appFitCore = new AppFitCore(eventDigester, undefined, 'node', () =>
-      randomUUID(),
+    this.appFitCore = new AppFitCore(
+      eventDigester,
+      undefined,
+      'node',
+      undefined,
+      () => randomUUID(),
     );
   }
 
