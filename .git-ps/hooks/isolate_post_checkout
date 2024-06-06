@@ -1,0 +1,25 @@
+#!/bin/sh
+# https://book.git-ps.sh/tool/hooks.html
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+WHITE='\033[0;37m'
+RESET='\033[0m'
+
+npm run lint:dry
+if [ $? -ne 0 ]; then
+  echo "${RED} \nCommand 'npm run lint:dry' Failed\n ${RESET}"
+  exit 10
+fi
+
+npm run build
+if [ $? -ne 0 ]; then
+  echo "${RED} \nCommand 'npm run build' Failed\n ${RESET}"
+  exit 20
+fi
+
+npm run test:bail
+if [ $? -ne 0 ]; then
+  echo "${RED} \nCommand 'npm run test:bail Failed'\n ${RESET}"
+  exit 30
+fi

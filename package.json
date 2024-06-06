@@ -6,13 +6,14 @@
   ],
   "scripts": {
     "build": "npx lerna run build --stream",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "lint:dry": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint": "npx lerna run lint --stream",
+    "lint:dry": "npx lerna run lint:dry --stream",
     "package": "npm run build && npm pack",
     "prettier": "npx prettier . --write",
     "deploy:publish": "npx lerna publish from-package --yes",
     "deploy:version": "npx lerna version",
     "test": "jest --no-cache",
+    "test:bail": "jest --bail --no-cache",
     "test:cov": "jest --coverage --no-cache",
     "display-version": "echo $npm_package_version"
   },

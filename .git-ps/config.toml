@@ -1,0 +1,10 @@
+[pull]
+show_list_post_pull = true
+
+[request_review]
+verify_isolation = true
+
+[integrate]
+verify_isolation = false
+prompt_for_reassurance = true
+pull_after_integrate = true
