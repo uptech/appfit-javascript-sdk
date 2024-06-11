@@ -1,7 +1,10 @@
-export class AppFitConfiguration {
-  readonly apiKey: string;
+export interface AppFitConfigurationOptions {
+  appVersion?: string;
+}
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
-  }
+export class AppFitConfiguration {
+  constructor(
+    public readonly apiKey: string,
+    public readonly options: AppFitConfigurationOptions,
+  ) {}
 }

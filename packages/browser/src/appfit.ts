@@ -27,6 +27,7 @@ export class AppFit {
       new BrowserUserCache(),
       'website',
       { browser: { userAgent } },
+      configuration.options,
     );
   }
 

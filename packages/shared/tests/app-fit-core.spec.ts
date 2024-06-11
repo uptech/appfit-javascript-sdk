@@ -23,6 +23,7 @@ const appFitCore = new AppFitCore(
   userCache,
   'web',
   { browser: { userAgent: 'test-agent' } },
+  { appVersion: '1.0.0' },
   eventUUIDGenerator,
 );
 
@@ -50,7 +51,10 @@ describe('AppFitCore', () => {
           properties: {
             myProperty: 'myValue',
           },
-          systemProperties: { browser: { userAgent: 'test-agent' } },
+          systemProperties: {
+            browser: { userAgent: 'test-agent' },
+            appVersion: '1.0.0',
+          },
         },
         eventSource: 'appfit',
         version: '2',
@@ -74,7 +78,10 @@ describe('AppFitCore', () => {
           eventName: 'appfit_user_identified',
           origin: 'web',
           properties: {},
-          systemProperties: { browser: { userAgent: 'test-agent' } },
+          systemProperties: {
+            browser: { userAgent: 'test-agent' },
+            appVersion: '1.0.0',
+          },
         },
         eventSource: 'appfit',
         version: '2',
@@ -89,7 +96,10 @@ describe('AppFitCore', () => {
           properties: {
             myProperty: 'myValue',
           },
-          systemProperties: { browser: { userAgent: 'test-agent' } },
+          systemProperties: {
+            browser: { userAgent: 'test-agent' },
+            appVersion: '1.0.0',
+          },
         },
         eventSource: 'appfit',
         version: '2',
@@ -117,7 +127,10 @@ describe('AppFitCore', () => {
           properties: {
             myProperty: 'myValue',
           },
-          systemProperties: { browser: { userAgent: 'test-agent' } },
+          systemProperties: {
+            browser: { userAgent: 'test-agent' },
+            appVersion: '1.0.0',
+          },
         },
         eventSource: 'appfit',
         version: '2',
@@ -185,7 +198,10 @@ describe('AppFitCore', () => {
           properties: {
             myProperty: 'myValue',
           },
-          systemProperties: { browser: { userAgent: 'test-agent' } },
+          systemProperties: {
+            browser: { userAgent: 'test-agent' },
+            appVersion: '1.0.0',
+          },
         },
         eventSource: 'appfit',
         version: '2',

@@ -1,7 +1,8 @@
-export class AppFitServerConfiguration {
-  readonly apiKey: string;
+import { AppFitConfigurationOptions } from '@uptechworks/appfit-shared';
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
-  }
+export class AppFitServerConfiguration {
+  constructor(
+    public readonly apiKey: string,
+    public readonly options: AppFitConfigurationOptions = {},
+  ) {}
 }

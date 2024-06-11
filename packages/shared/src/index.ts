@@ -8,6 +8,7 @@ export { BrowserUserCache } from './users/browser-user-cache';
 
 // types
 export type { IAppFitCore } from './app-fit-core';
+export type { AppFitConfigurationOptions } from './models/appfit-configuration';
 export type { EventUserIdentifier } from './models/event-user-indentifier';
 export type { IEventCache } from './events/models/event-cache.interface';
 export type { IUserCache } from './events/models/user-cache.interface';

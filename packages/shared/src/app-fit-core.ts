@@ -10,6 +10,7 @@ import {
   AppFitEvent,
   AppFitEventSystemProperties,
 } from './events/models/appfit-event';
+import { AppFitConfigurationOptions } from './models/appfit-configuration';
 
 /** @internal */
 export interface IAppFitCore {
@@ -32,9 +33,16 @@ export class AppFitCore implements IAppFitCore {
     private readonly userCache?: IUserCache,
     private readonly origin?: string,
     private readonly systemProperties: AppFitEventSystemProperties = {},
+    private readonly options: AppFitConfigurationOptions = {},
     private readonly generateUuid: () => UUID = generateNewUuid,
   ) {
     this.userCache?.setAnonymousId();
+
+    // this gets passed in as config option, but we consume it as a
+    // system property
+    if (options.appVersion) {
+      this.systemProperties.appVersion = options.appVersion;
+    }
 
     // This is a unique event that is used specifically to track when the
     // AppFit SDK has been initialized.

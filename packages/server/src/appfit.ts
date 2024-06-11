@@ -26,6 +26,7 @@ export class AppFit {
       undefined,
       'node',
       undefined,
+      configuration.options,
       () => randomUUID(),
     );
   }

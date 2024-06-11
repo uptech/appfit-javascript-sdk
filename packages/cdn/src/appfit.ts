@@ -30,6 +30,7 @@ export class AppFit {
       new BrowserUserCache(),
       origin,
       { browser: { userAgent } },
+      configuration.options,
     );
   }
 
