@@ -15,7 +15,7 @@ export class AppFit {
 
   constructor(configuration: AppFitBrowserConfiguration) {
     this.configuration = configuration;
-    const userAgent = window?.navigator?.userAgent;
+    const userAgent = globalThis?.window?.navigator?.userAgent;
 
     const eventDigester = new EventDigester(
       new AppFitApiClient(configuration.apiKey),
