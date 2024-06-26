@@ -1,8 +1,10 @@
-import { AppFitConfigurationOptions } from '@uptechworks/appfit-shared';
+export interface AppFitServerConfigurationOptions {
+  appVersion?: string;
+}
 
 export class AppFitServerConfiguration {
   constructor(
     public readonly apiKey: string,
-    public readonly options: AppFitConfigurationOptions = {},
+    public readonly options: AppFitServerConfigurationOptions = {},
   ) {}
 }

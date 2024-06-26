@@ -1,5 +1,6 @@
 export interface AppFitConfigurationOptions {
   appVersion?: string;
+  enableIpTracking?: boolean;
 }
 
 export class AppFitConfiguration {

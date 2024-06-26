@@ -1,5 +1,6 @@
 import {
   AppFitApiClient,
+  AppFitConfigurationOptions,
   AppFitCore,
   AppFitEvent,
   EventDigester,
@@ -21,12 +22,18 @@ export class AppFit {
       new InMemoryEventCache(),
     );
 
+    // set default options
+    const options: AppFitConfigurationOptions = {
+      ...this.configuration.options,
+      enableIpTracking: false,
+    };
+
     this.appFitCore = new AppFitCore(
       eventDigester,
       undefined,
       'node',
       undefined,
-      configuration.options,
+      options,
       () => randomUUID(),
     );
   }
