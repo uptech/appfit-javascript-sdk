@@ -31,6 +31,7 @@ export class AppFit {
     this.appFitCore = new AppFitCore(
       eventDigester,
       undefined,
+      undefined,
       'node',
       undefined,
       options,

@@ -4,12 +4,16 @@ import {
   BrowserUserCache,
   EventDigester,
   IApiClient,
+  IIpAddressClient,
   InMemoryEventCache,
 } from '../src';
 
 const mockApiClient: jest.Mocked<IApiClient> = {
   track: jest.fn(),
   trackBatch: jest.fn(),
+};
+const mockIpAdressClient: jest.Mocked<IIpAddressClient> = {
+  getIpAddress: jest.fn().mockReturnValue(Promise.resolve('123.456.789.123')),
 };
 const eventCache = new InMemoryEventCache();
 const userCache = new BrowserUserCache(
@@ -21,6 +25,7 @@ const testDigester = new EventDigester(mockApiClient, eventCache);
 const appFitCore = new AppFitCore(
   testDigester,
   userCache,
+  mockIpAdressClient,
   'web',
   { browser: { userAgent: 'test-agent' } },
   { appVersion: '1.0.0' },
@@ -30,8 +35,9 @@ const appFitCore = new AppFitCore(
 describe('AppFitCore', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    userCache.setUserId(); // clear user id
+    userCache.clear();
     eventCache.clear(); // clear failed events
+    userCache.setUserId(); // set anonymous id
   });
 
   describe('with internet', () => {
@@ -160,6 +166,41 @@ describe('AppFitCore', () => {
       await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
 
       expect(userCache.getUserId()).toBe('fake-user-id');
+    });
+
+    it('should cache an ip address', async () => {
+      mockApiClient.track.mockReturnValueOnce(Promise.resolve(true));
+
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
+
+      expect(userCache.getIpAddress()).toBe('123.456.789.123');
+    });
+
+    it('should not cache ip if enableIpTracking option is false', async () => {
+      mockApiClient.track.mockReturnValueOnce(Promise.resolve(true));
+
+      const nonTrackingAppFitCore = new AppFitCore(
+        testDigester,
+        userCache,
+        mockIpAdressClient,
+        'web',
+        { browser: { userAgent: 'test-agent' } },
+        { appVersion: '1.0.5', enableIpTracking: false }, // disable tracking
+        eventUUIDGenerator,
+      );
+
+      await nonTrackingAppFitCore.track('fakeEvent', { myProperty: 'myValue' });
+
+      expect(userCache.getIpAddress()).toBeUndefined();
+    });
+
+    it('should track even if ip address call fails', async () => {
+      mockApiClient.track.mockReturnValueOnce(Promise.resolve(true));
+      mockIpAdressClient.getIpAddress.mockReturnValueOnce(Promise.reject());
+
+      await appFitCore.track('fakeEvent', { myProperty: 'myValue' });
+
+      expect(mockApiClient.track).toHaveBeenCalledTimes(1);
     });
   });
 

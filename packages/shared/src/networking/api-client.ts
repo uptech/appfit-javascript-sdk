@@ -30,9 +30,7 @@ export class AppFitApiClient implements IApiClient {
     return responsePromise.then(
       (response) => {
         // return true if response status is in 200s
-        return (
-          !!response.status && response.status >= 200 && response.status < 300
-        );
+        return response.ok;
       },
       () => {
         // didn't receive a response
@@ -59,9 +57,7 @@ export class AppFitApiClient implements IApiClient {
     return responsePromise.then(
       (response) => {
         // return true if response status is in 200s
-        return (
-          !!response.status && response.status >= 200 && response.status < 300
-        );
+        return response.ok;
       },
       () => {
         // didn't receive a response

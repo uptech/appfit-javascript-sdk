@@ -6,6 +6,7 @@ import {
   EventDigester,
   IAppFitCore,
   InMemoryEventCache,
+  IpAddressClient,
 } from '@uptechworks/appfit-shared';
 import { AppFitBrowserConfiguration } from './models/app-fit-browser-configuration';
 
@@ -25,6 +26,7 @@ export class AppFit {
     this.appFitCore = new AppFitCore(
       eventDigester,
       new BrowserUserCache(),
+      new IpAddressClient(),
       'website',
       { browser: { userAgent } },
       configuration.options,

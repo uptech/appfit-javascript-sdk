@@ -5,6 +5,7 @@ export { AppFitApiClient } from './networking/api-client';
 export { generateNewUuid } from './utils/uuid';
 export { InMemoryEventCache } from './events/in-memory-event-cache';
 export { BrowserUserCache } from './users/browser-user-cache';
+export { IpAddressClient } from './networking/ip-address-client';
 
 // types
 export type { IAppFitCore } from './app-fit-core';
@@ -18,4 +19,5 @@ export type {
 } from './events/models/appfit-event';
 export type { IEventDigest } from './events/event-digester';
 export type { IApiClient } from './networking/api-client';
+export type { IIpAddressClient } from './networking/ip-address-client';
 export type { UUID } from './utils/uuid';

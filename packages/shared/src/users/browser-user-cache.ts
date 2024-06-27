@@ -68,7 +68,7 @@ export class BrowserUserCache implements IUserCache {
     return this.getExpiringCache(UserCacheKey.IP_ADDRESS);
   }
 
-  clearCache() {
+  clear() {
     Object.keys(UserCacheKey).forEach((key: string) => {
       this.removeCache(UserCacheKey[key as UserCacheKeyKey]);
     });

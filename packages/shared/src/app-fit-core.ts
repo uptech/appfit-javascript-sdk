@@ -11,6 +11,7 @@ import {
   AppFitEventSystemProperties,
 } from './events/models/appfit-event';
 import { AppFitConfigurationOptions } from './models/appfit-configuration';
+import { IIpAddressClient } from './networking/ip-address-client';
 
 /** @internal */
 export interface IAppFitCore {
@@ -28,19 +29,28 @@ export interface IAppFitCore {
 
 /** @internal */
 export class AppFitCore implements IAppFitCore {
+  private readonly options: AppFitConfigurationOptions;
+
   constructor(
     private readonly eventDigester: IEventDigest,
     private readonly userCache?: IUserCache,
+    private readonly ipClient?: IIpAddressClient,
     private readonly origin?: string,
     private readonly systemProperties: AppFitEventSystemProperties = {},
-    private readonly options: AppFitConfigurationOptions = {},
+    options: AppFitConfigurationOptions = {},
     private readonly generateUuid: () => UUID = generateNewUuid,
   ) {
     this.userCache?.setAnonymousId();
 
+    // set defaults for some properties
+    this.options = {
+      enableIpTracking: true,
+      ...options,
+    };
+
     // this gets passed in as config option, but we consume it as a
     // system property
-    if (options.appVersion) {
+    if (this.options.appVersion) {
       this.systemProperties.appVersion = options.appVersion;
     }
 
@@ -67,6 +77,7 @@ export class AppFitCore implements IAppFitCore {
     const userId = userData?.userId ?? this.userCache?.getUserId();
     const anonymousId =
       userData?.anonymousId ?? this.userCache?.getAnonymousId();
+    const ipAddress = await this.getIpAddress();
 
     const event = createAnalyticEvent(
       id,
@@ -75,7 +86,7 @@ export class AppFitCore implements IAppFitCore {
       userId,
       anonymousId,
       payload,
-      this.systemProperties,
+      { ...this.systemProperties, ipAddress },
     );
     return this.eventDigester.digest(event);
   }
@@ -94,13 +105,14 @@ export class AppFitCore implements IAppFitCore {
     const userId = userData?.userId ?? this.userCache?.getUserId();
     const anonymousId =
       userData?.anonymousId ?? this.userCache?.getAnonymousId();
+    const ipAddress = await this.getIpAddress();
 
     const event = createAnalyticEventFromAppFitEvent(
       appFitEvent,
       this.origin,
       userId,
       anonymousId,
-      this.systemProperties,
+      { ...this.systemProperties, ipAddress },
     );
     return this.eventDigester.digest(event);
   }
@@ -121,5 +133,29 @@ export class AppFitCore implements IAppFitCore {
     // AppFit SDK has been identified a user
     // This is an internal event.
     this.track('appfit_user_identified', {});
+  }
+
+  private async getIpAddress(): Promise<string | undefined> {
+    if (!this.options.enableIpTracking) {
+      return undefined;
+    }
+
+    const ipAddress = this.userCache?.getIpAddress();
+    if (ipAddress) {
+      return ipAddress;
+    }
+
+    let fetchedIp: string | undefined;
+    try {
+      fetchedIp = await this.ipClient?.getIpAddress();
+    } catch {
+      return undefined;
+    }
+
+    if (fetchedIp) {
+      this.userCache?.setIpAddress(fetchedIp, 60 * 1000);
+    }
+
+    return fetchedIp;
   }
 }

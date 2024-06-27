@@ -49,7 +49,7 @@ describe('BrowserUserCache', () => {
     userCache.setUserId('mock-user-id');
     userCache.setAnonymousId();
     userCache.setIpAddress('123.456.789.123', 1000);
-    userCache.clearCache();
+    userCache.clear();
 
     expect(userCache.getUserId()).toBeUndefined();
     expect(userCache.getAnonymousId()).toBeUndefined();
