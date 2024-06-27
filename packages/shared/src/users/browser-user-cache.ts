@@ -4,7 +4,17 @@ import { generateNewUuid, UUID } from '../utils/uuid';
 enum UserCacheKey {
   USER_ID = 'APPFIT_userId',
   ANONYMOUS = 'APPFIT_anonymousId',
+  IP_ADDRESS = 'APPFIT_IPAddress',
 }
+
+// this allows us to index the enum
+// see: https://github.com/microsoft/TypeScript/issues/33123#issuecomment-645557830
+type UserCacheKeyKey = keyof typeof UserCacheKey;
+
+type ExpiringStorage<T> = {
+  value: T;
+  expiration: number;
+};
 
 export class BrowserUserCache implements IUserCache {
   private readonly backupCache = new Map<string, string | null>();
@@ -33,11 +43,6 @@ export class BrowserUserCache implements IUserCache {
     return this.readCache(UserCacheKey.USER_ID);
   }
 
-  clearCache() {
-    this.removeCache(UserCacheKey.USER_ID);
-    this.removeCache(UserCacheKey.ANONYMOUS);
-  }
-
   /// Generates an anonymous id if it does not exist.
   /// This is used to identify the user in the AppFit dashboard.
   /// This checks to see if a `userId` exists, if it does not, it will generate an anonymous id.
@@ -55,6 +60,20 @@ export class BrowserUserCache implements IUserCache {
     return this.readCache(UserCacheKey.ANONYMOUS);
   }
 
+  setIpAddress(ipAddress: string, durationMS: number): void {
+    this.setExpiringCache(UserCacheKey.IP_ADDRESS, ipAddress, durationMS);
+  }
+
+  getIpAddress(): string | undefined {
+    return this.getExpiringCache(UserCacheKey.IP_ADDRESS);
+  }
+
+  clearCache() {
+    Object.keys(UserCacheKey).forEach((key: string) => {
+      this.removeCache(UserCacheKey[key as UserCacheKeyKey]);
+    });
+  }
+
   private generateAnonymousId(): string {
     const anonymousId = this.generateUuid();
     this.setCache(UserCacheKey.ANONYMOUS, anonymousId);
@@ -70,12 +89,42 @@ export class BrowserUserCache implements IUserCache {
     this.backupCache.set(key, value);
   }
 
+  private setExpiringCache<T>(key: string, value: T, durationMS: number) {
+    const expiration = new Date().getTime() + durationMS;
+    const storageValue: ExpiringStorage<T> = {
+      value,
+      expiration,
+    };
+    const stringifiedValue = JSON.stringify(storageValue);
+
+    this.setCache(key, stringifiedValue);
+  }
+
   private readCache(key: string): string | undefined {
     if (this.hasLocalStorageExistence) {
       return localStorage.getItem(key) ?? undefined;
     }
 
     return this.backupCache.get(key) ?? undefined;
+  }
+
+  private getExpiringCache<T>(key: string): T | undefined {
+    const storageValue = this.readCache(key);
+    if (!storageValue) {
+      return undefined;
+    }
+    const parsedStorage: ExpiringStorage<T> = JSON.parse(storageValue);
+    const expiration = parsedStorage.expiration;
+    if (!expiration) {
+      return undefined;
+    }
+    const now = new Date().getTime();
+    if (now > expiration) {
+      this.removeCache(key);
+      return undefined;
+    }
+
+    return parsedStorage.value;
   }
 
   private removeCache(key: string) {
