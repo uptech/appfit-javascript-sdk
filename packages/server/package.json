@@ -1,6 +1,6 @@
 {
   "name": "@uptechworks/appfit-server-sdk",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "keywords": [
     "analytics"
   ],
@@ -30,7 +30,7 @@
   "author": "UpTech Works, LLC",
   "license": "MIT",
   "dependencies": {
-    "@uptechworks/appfit-shared": "^0.0.5"
+    "@uptechworks/appfit-shared": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.11"
